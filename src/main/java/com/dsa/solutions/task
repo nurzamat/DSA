@@ -1,0 +1,57 @@
+1) Three in One
+Describe how you could use a single Array to implement three stacks.
+-----------------------------------------------------------------------
+
+2) Stack Minimum
+   How would you design a stack which, in addition to push and pop, has a function min which returns the minimum element? Push, pop and min should all operate in O(1).
+--------------------------------
+
+3) Stack of Plates
+Imagine a (literal) stack of plates. If the stack gets too high, it might topple. Therefore, in real life, we would likely start a new stack when the previous stack exceeds some threshold. Implement a data structure SetOfStacks that mimics this. SetOfStacks should be composed of several stacks and should create a new stack once the previous one exceeds capacity, SetOfStacks.push() and SetOfStacks.pop() should behave identically to a single stack (that is, pop( ) should return the same values as it would if there were just a single stack).
+
+Follow Up:
+
+Implement a function popAt (int index) which performs a pop operation on a specific sub - stack.
+
+
+
+Examples:
+
+SetOfStacks newStack = new SetOfStacks(3);
+newStack.push(1);
+newStack.push(2);
+newStack.push(3);
+newStack.push(4);
+newStack.push(5);
+newStack.popAt(0); //3
+newStack.popAt(0); //4
+
+=================================
+
+4) Queue via Stacks
+   Implement Queue class which implements a queue using two stacks.
+
+5) Animal Shelter
+   An animal shelter, which holds only dogs and cats, operates on a strictly "first in, first out" basis. People must adopt either the "oldest" (based on arrival time) of all animals at the shelter, or they can select whether they would prefer a dog or a cat (and will receive the oldest animal of that type). They cannot select which specific animal they would like. Create the data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog, and dequeueCat.
+
+
+
+   Example
+
+   AnimalQueue animals = new AnimalQueue();
+   animals.enqueue(new Cat("Kiki"));
+   animals.enqueue(new Cat("Kari"));
+   animals.enqueue(new Dog("Beji"));
+   animals.enqueue(new Cat("Reki"));
+   animals.enqueue(new Dog("Dexter"));
+
+   animals.dequeueAny().name();
+   animals.dequeueDogs().name();
+   animals.dequeueCats().name();
+
+   //Output
+   Cat: Kiki
+   Dog: Beji
+   Cat: Kari
+  -----------------------------------
+
