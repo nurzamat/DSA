@@ -9,6 +9,10 @@ class Main {
     newStack.push(4);
     newStack.push(5);
     System.out.println(newStack.popAt(0));
+    System.out.println("size="+newStack.stacks.size());
     System.out.println(newStack.popAt(0));
+    System.out.println("size="+newStack.stacks.size());
+    System.out.println(newStack.popAt(0));
+    System.out.println("size="+newStack.stacks.size());
   }
 }
