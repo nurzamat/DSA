@@ -40,28 +40,27 @@ public class Solutions {
 
     //merge two sorted array
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        //special case
-        if(m == 0){
-            nums1[0] = nums2[0];
-            return;
-        }
-
         int i = n-1;
         int j = m-1;
         int k=m+n;
-        while(i>=0 && j>=0){
+        while(i>=0){
             k--;
-            if(nums2[i] >= nums1[j]){
+            if(j>=0){
+                if(nums2[i] >= nums1[j]){
+                    nums1[k] = nums2[i];
+                    i--;
+                }
+                else{
+                    nums1[k] = nums1[j];
+                    nums1[j] = nums2[i];
+                    j--;
+                }
+            }
+            else {
                 nums1[k] = nums2[i];
                 i--;
             }
-            else{
-                nums1[k] = nums1[j];
-                nums1[j] = nums2[i];
-                j--;
-            }
         }
-        System.out.println(Arrays.toString(nums1));
     }
 
     public static void main(String[] args){
