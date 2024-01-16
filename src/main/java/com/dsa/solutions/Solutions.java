@@ -36,4 +36,26 @@ public class Solutions {
         return new int[]{-1,-1};
     }
     */
+
+    //merge two sorted array
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        //special case
+        if(m == 0){
+            nums1[0] = nums2[0];
+            return;
+        }
+
+        int i = n-1;
+        int j = m-1;
+        for(int k=m+n-1; k>0; k--){
+            if(nums2[i] > nums1[j]){
+                nums1[k] = nums2[i];
+                i--;
+            }
+            else{
+                nums1[k] = nums1[j];
+                j--;
+            }
+        }
+    }
 }
