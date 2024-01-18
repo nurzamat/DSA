@@ -1,8 +1,6 @@
 package com.dsa.solutions;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Solutions {
     //soltion O(n)
@@ -76,6 +74,36 @@ public class Solutions {
                 nums1[k--] = nums2[i--];
             }
         }
+    }
+
+    //task Valid Parentheses
+    public boolean isValid(String s) {
+        if(s == null || s.isEmpty())
+            return false;
+        Map<Character, Character> map = new HashMap<>();
+        map.put(')','(');
+        map.put('}','{');
+        map.put(']','[');
+
+        Stack<Character> stack = new Stack<>();
+        char[] arr = s.toCharArray();
+        for (Character ch:arr) {
+            stack.push(ch);
+        }
+        Character start;
+        Character end;
+        while (!stack.isEmpty()){
+            end =  stack.pop();
+            start = stack.pop();
+            if(!map.containsKey(end)){
+               return false;
+            }
+            if(!map.get(end).equals(start)){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static void main(String[] args){
