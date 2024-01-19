@@ -80,27 +80,34 @@ public class Solutions {
     public boolean isValid(String s) {
         if(s == null || s.isEmpty())
             return false;
-        Map<Character, Character> map = new HashMap<>();
-        map.put(')','(');
-        map.put('}','{');
-        map.put(']','[');
-
-        Stack<Character> stack = new Stack<>();
         char[] arr = s.toCharArray();
-        for (Character ch:arr) {
-            stack.push(ch);
+        if(arr.length%2!=0){
+            return false;
         }
-        Character start;
-        Character end;
-        while (!stack.isEmpty()){
-            end =  stack.pop();
-            start = stack.pop();
-            if(!map.containsKey(end)){
-               return false;
+
+        Map<Character, Character> map = new HashMap<>();
+        map.put('(',')');
+        map.put('{','}');
+        map.put('[',']');
+
+        Stack<Character> stack = new Stack();
+        for (int i=0; i<arr.length; i++){
+            if(map.containsKey(arr[i])){
+                stack.push(arr[i]);
             }
-            if(!map.get(end).equals(start)){
-                return false;
+            else {
+                if(!stack.isEmpty()){
+                    char open = stack.pop();
+                    if(!map.get(open).equals(arr[i])){
+                        return false;
+                    }
+                }
+                else return false;
             }
+        }
+
+        if(!stack.isEmpty()){
+            return false;
         }
 
         return true;
