@@ -113,6 +113,63 @@ public class Solutions {
         return true;
     }
 
+    //21. Merge Two Sorted Linked Lists
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1 == null && list2 == null){
+            return null;
+        }
+        if(list1 == null && list2 != null){
+            return list2;
+        }
+        if(list1 != null && list2 == null){
+            return list1;
+        }
+        ListNode head;
+        ListNode ptr1 = list1;
+        ListNode ptr2 = list2;
+
+        if(ptr1.val > ptr2.val){
+            head = ptr2;
+            ptr2 = ptr2.next;
+        }
+        else{
+            head = ptr1;
+            ptr1 = ptr1.next;
+        }
+
+        ListNode next = head;
+
+        while(next != null){
+            if(ptr1 != null && ptr2 != null){
+                if(ptr1.val > ptr2.val){
+                    next.next = ptr2;
+                    ptr2 = ptr2.next;
+                }
+                else{
+                    next.next = ptr1;
+                    ptr1 = ptr1.next;
+                }
+            }
+            else {
+                if(ptr1 == null && ptr2 == null){
+                    next.next = null;
+                } else if (ptr1 != null) {
+                    next.next = ptr1;
+                    ptr1 = ptr1.next;
+                } else {
+                    next.next = ptr2;
+                    ptr2 = ptr2.next;
+                }
+            }
+
+            next = next.next;
+        }
+
+
+
+        return head;
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
