@@ -193,6 +193,49 @@ public class Solutions {
         return false;
     }
 
+    //2. Add Two Numbers
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+
+        ListNode ptr1 = l1;
+        ListNode ptr2 = l2;
+
+        ListNode head = null;
+        ListNode next = null;
+        int caret = 0;
+        int sum = 0;
+        int mod = 0;
+        while(ptr1 != null || ptr2 != null){
+            if(ptr1 != null && ptr2 != null){
+                sum = ptr1.val + ptr2.val + caret;
+                ptr1 = ptr1.next;
+                ptr2 = ptr2.next;
+            } else if(ptr1 != null && ptr2 == null){
+                sum = ptr1.val + caret;
+                ptr1 = ptr1.next;
+            } else {
+                sum = ptr2.val + caret;
+                ptr2 = ptr2.next;
+            }
+
+            caret = sum/10;
+            mod = sum%10;
+
+            if(head == null){
+                head = new ListNode(mod);
+                next = head;
+            }
+            else{
+                next.next = new ListNode(mod);
+                next = next.next;
+            }
+        }
+        if(caret > 0){
+            next.next = new ListNode(caret);
+        }
+
+        return head;
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
