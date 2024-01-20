@@ -170,6 +170,29 @@ public class Solutions {
         return head;
     }
 
+    //141. Linked List Cycle
+    public boolean hasCycle(ListNode head) {
+
+        if(head == null || head.next == null){
+            return false;
+        }
+
+        ListNode ptr1 = head;
+        ListNode ptr2 = head.next.next;
+
+        while(ptr1 != null && ptr2 != null){
+            if(ptr1 == ptr2){
+                return true;
+            }
+            ptr1 = ptr1.next;
+            if(ptr2.next == null)
+                return false;
+            ptr2 = ptr2.next.next;
+        }
+
+        return false;
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
