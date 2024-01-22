@@ -255,6 +255,28 @@ public class Solutions {
             return 1 + Math.max(minDepth(root.left), minDepth(root.right));
     }
 
+    //110. Balanced Binary Tree
+    public boolean isBalanced(TreeNode root) {
+        if(root == null)
+            return true;
+        return checkHeight(root) != -1;
+    }
+
+    public int checkHeight(TreeNode node){
+        if(node == null)
+            return 0;
+        int lHeight = checkHeight(node.left);
+        if(lHeight == -1)
+            return -1;
+        int rHeight = checkHeight(node.right);
+        if(rHeight == -1)
+            return -1;
+        if(Math.abs(lHeight - rHeight)>1){
+            return -1;
+        }
+        else return 1 + Math.max(lHeight, rHeight);
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
