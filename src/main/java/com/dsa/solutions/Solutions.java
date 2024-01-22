@@ -238,10 +238,21 @@ public class Solutions {
         return head;
     }
 
+    //104. Maximum Depth of Binary Tree
     public int maxDepth(TreeNode root) {
         if(root == null)
             return 0;
         return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+
+    //111. Minimum Depth of Binary Tree
+    public int minDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        if(root.left != null && root.right != null)
+            return 1 + Math.min(minDepth(root.left), minDepth(root.right));
+        else
+            return 1 + Math.max(minDepth(root.left), minDepth(root.right));
     }
 
     public static void main(String[] args){
