@@ -43,4 +43,25 @@ public class ValidateBST {
     }
 
 
+    //validate BST best solution
+    boolean flag = true;
+    TreeNode prev;
+    public boolean isValidBST(TreeNode root) {
+        inorder(root);
+        return flag;
+    }
+
+    private void inorder (TreeNode root) {
+        //base
+        if(root == null) return;
+
+        //logic
+        inorder(root.left);
+        if (prev != null && prev.data >= root.data) {
+            flag = false;
+        }
+        prev = root;
+        inorder(root.right);
+    }
+
 }
