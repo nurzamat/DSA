@@ -277,6 +277,33 @@ public class Solutions {
         else return 1 + Math.max(lHeight, rHeight);
     }
 
+    TreeNode prev;
+    Integer minDiff = null;
+
+    //Minimum Absolute Difference in BST
+    public int getMinimumDifference(TreeNode root) {
+        inorder(root);
+        return minDiff!=null?minDiff:0;
+    }
+
+    private void inorder(TreeNode root){
+        //base
+        if(root == null)
+            return;
+
+        //logic
+        inorder(root.left);
+        if(prev != null){
+            int diff = root.data-prev.data;
+            if(minDiff == null)
+                minDiff = diff;
+            if(diff<minDiff)
+                minDiff = diff;
+        }
+        prev = root;
+        inorder(root.right);
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
