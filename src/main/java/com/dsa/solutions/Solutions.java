@@ -304,6 +304,30 @@ public class Solutions {
         inorder(root.right);
     }
 
+    int i = 0;
+    TreeNode node;
+
+    //Kth Smallest Element in a BST
+    public int kthSmallest(TreeNode root, int k) {
+        inorder(root, k);
+        return i;
+    }
+
+    private void inorder(TreeNode root, int k){
+        //base
+        if(root == null)
+            return;
+
+        //logic
+        inorder(root.left, k);
+        if(i == k){
+            node = root;
+            return;
+        }
+        i++;
+        inorder(root.right, k);
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
