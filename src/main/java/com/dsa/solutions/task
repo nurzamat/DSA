@@ -186,3 +186,8 @@ Given the root of a Binary Search Tree (BST), return the minimum absolute differ
 230. Kth Smallest Element in a BST
 Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
 ======================
+
+236. Lowest Common Ancestor of a Binary Tree
+Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+======================

@@ -328,6 +328,40 @@ public class Solutions {
         inorder(root.right, k);
     }
 
+    TreeNode parent = null;
+
+    //236. Lowest Common Ancestor of a Binary Tree
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+    {
+        postorder(root, p, q);
+        return parent;
+    }
+
+    private TreeNode postorder(TreeNode node, TreeNode p, TreeNode q){
+
+        if(node == null)
+            return null;
+
+        TreeNode n1 = postorder(node.left, p, q);
+        TreeNode n2 = postorder(node.right, p, q);
+
+        //parent left right
+        if((n1 == p || n1 == q) && (n2 == p || n2 == q))
+            parent = node;
+        if((n1 == p || n1 == q) && (node == p || node == q))
+            parent = node;
+        if((n2 == p || n2 == q) && (node == p || node == q))
+            parent = node;
+
+        //up
+        if(n1 == p || n1 == q)
+            return n1;
+        if(n2 == p || n2 == q)
+            return n2;
+
+        return node;
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
