@@ -406,6 +406,45 @@ public class Solutions {
         return result;
     }
 
+    //199. Binary Tree Right Side View
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList();
+
+        int popCount = 1;
+        int addCount = 0;
+        Integer last = null;
+        if(root != null){
+            Queue<TreeNode> queue = new LinkedList();
+            queue.add(root);
+            TreeNode node;
+            while(!queue.isEmpty()){
+                node = queue.poll();
+                if(node.left != null){
+                    queue.add(node.left);
+                    addCount++;
+                }
+                if(node.right != null){
+                    queue.add(node.right);
+                    addCount++;
+                }
+
+                //average logic
+                if(popCount>0){
+                    popCount--;
+                    last = node.data;
+                }
+
+                if(popCount == 0){
+                    result.add(last);
+
+                    popCount = addCount;
+                    addCount = 0;
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
