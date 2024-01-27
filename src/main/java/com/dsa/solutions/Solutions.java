@@ -362,6 +362,50 @@ public class Solutions {
         return node;
     }
 
+    //Average of Levels in Binary Tree
+    public List<Double> averageOfLevels(TreeNode root) {
+
+        List<Double> result = new ArrayList();
+        int popCount = 1;
+        int addCount = 0;
+        int size=0;
+        double sum = 0d;
+        if(root != null){
+            Queue<TreeNode> queue = new LinkedList();
+            queue.add(root);
+            TreeNode node;
+            while(!queue.isEmpty()){
+                node = queue.poll();
+                if(node.left != null){
+                    queue.add(node.left);
+                    addCount++;
+                }
+                if(node.right != null){
+                    queue.add(node.right);
+                    addCount++;
+                }
+
+                //average logic
+                if(popCount>0){
+                    popCount--;
+                    size++;
+                    sum = sum + node.data;
+                }
+
+                if(popCount == 0){
+                    Double average = sum/size;
+                    result.add(average);
+
+                    popCount = addCount;
+                    addCount = 0;
+                    size=0;
+                    sum = 0d;
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
