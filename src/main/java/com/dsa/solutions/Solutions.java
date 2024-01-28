@@ -540,6 +540,36 @@ public class Solutions {
         return numberOfIslands;
     }
 
+//best solution for number of islands
+   public int numIslands2(char[][] grid) {
+       int numOfIslands = 0;
+       int m = grid.length;
+       int n = grid[0].length;
+      for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (grid[i][j] == '1') {
+                dfs(i, j, grid);
+                numOfIslands += 1;
+            }
+        }
+    }
+    return numOfIslands;
+   }
+
+    private void dfs(int x, int y, char[][] grid) {
+        if ((x >= grid.length) || (x < 0) || (y >= grid[0].length) || (y < 0) || (grid[x][y] == '0')) {
+            return;
+        }
+        grid[x][y] = '0'; // mark as visited
+
+        dfs(x+1, y, grid);
+        dfs(x-1, y, grid);
+        dfs(x, y+1, grid);
+        dfs(x, y-1, grid);
+        return;
+    }
+
+
     class Spot{
         int i;
         int j;
