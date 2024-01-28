@@ -445,6 +445,69 @@ public class Solutions {
         return result;
     }
 
+    //
+    class Solution {
+
+        class Spot{
+            int i;
+            int j;
+
+            public Spot(){
+            }
+            public Spot(int i, int j){
+                this.i = i;
+                this.j = j;
+            }
+        }
+
+        public int numIslands(char[][] grid) {
+
+            int numRows = grid[0].length;
+            int numColumns = grid.length;
+            boolean[][] visited = new boolean[numRows][numColumns];
+
+            Spot startSpot = null;
+            int numberOfIslands = 0;
+
+            for(int i=0; i<numRows; i++){
+                for(int j=0; j<numColumns; j++){
+                    if(grid[i][j]=='1' && !visited[i][j]){
+                        numberOfIslands++;
+                        Spot spot = new Spot(i,j);
+                        //BFS
+                        Queue<Spot> queue = new LinkedList();
+                        visited[spot.i, spot.j] = true;
+                        queue.add(spot);
+
+                        while(!queue.isEmpty()){
+                            spot = queue.poll();
+                            //left neighbor
+                            if(spot.j-1>=0 && !visited[spot.i][spot.j-1]){
+                                visited[spot.i, spot.j-1] = true;
+                                queue.add(new Spot(spot.i, spot.j-1));
+                            }
+                            //above neighbor
+                            if(spot.i-1>=0 && !visited[spot.i-1][spot.j]){
+                                visited[spot.i-1, spot.j] = true;
+                                queue.add(new Spot(spot.i-1, spot.j));
+                            }
+                            //right neighbor
+                            if(spot.j+1>=0 && !visited[spot.i][spot.j+1]){
+                                visited[spot.i, spot.j+1] = true;
+                                queue.add(new Spot(spot.i, spot.j+1));
+                            }
+                            //below neighbor
+                            if(spot.i+1>=0 && !visited[spot.i+1][spot.j]){
+                                visited[spot.i+1, spot.j] = true;
+                                queue.add(new Spot(spot.i+1, spot.j));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public static void main(String[] args){
         Solutions solutions = new Solutions();
         int[] nums1 = {1,2,3,0,0,0};
