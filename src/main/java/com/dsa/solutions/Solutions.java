@@ -494,6 +494,52 @@ public class Solutions {
         return numberOfIslands;
     }
 
+    public int numIslandsNew(char[][] grid) {
+
+        int numRows = grid.length;
+        int numColumns = grid[0].length;
+        int numberOfIslands = 0;
+        Queue<Spot> queue = new LinkedList();
+        Spot spot;
+        for(int i=0; i<numRows; i++){
+            for(int j=0; j<numColumns; j++){
+                if(grid[i][j]=='1'){
+                    numberOfIslands++;
+                    spot = new Spot(i,j);
+                    //BFS
+                    grid[spot.i][spot.j] = '0';
+                    queue.add(spot);
+
+                    while(!queue.isEmpty()){
+                        spot = queue.poll();
+                        //left neighbor
+                        if(spot.j-1>=0 && grid[spot.i][spot.j-1]=='1'){
+                            grid[spot.i][spot.j-1] = '0';
+                            queue.add(new Spot(spot.i, spot.j-1));
+                        }
+                        //above neighbor
+                        if(spot.i-1>=0 && grid[spot.i-1][spot.j]=='1'){
+                            grid[spot.i-1][spot.j] = '0';
+                            queue.add(new Spot(spot.i-1, spot.j));
+                        }
+                        //right neighbor
+                        if(spot.j+1<numColumns && grid[spot.i][spot.j+1]=='1'){
+                            grid[spot.i][spot.j+1] = '0';
+                            queue.add(new Spot(spot.i, spot.j+1));
+                        }
+                        //below neighbor
+                        if(spot.i+1<numRows && grid[spot.i+1][spot.j]=='1'){
+                            grid[spot.i+1][spot.j] = '0';
+                            queue.add(new Spot(spot.i+1, spot.j));
+                        }
+                    }
+                }
+            }
+        }
+
+        return numberOfIslands;
+    }
+
     class Spot{
         int i;
         int j;
