@@ -582,7 +582,27 @@ public class Solutions {
         }
     }
 
+    //108. Convert Sorted Array to Binary Search Tree
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return sortedArrayToBST(nums, 0, nums.length-1);
+    }
+
+    private TreeNode sortedArrayToBST(int[] arr, int start, int end){
+        if(end<start)
+            return null;
+        int mid = (end+start)/2;
+        TreeNode node = new TreeNode(arr[mid]);
+        node.left = sortedArrayToBST(arr, start, mid-1);
+        node.right = sortedArrayToBST(arr, mid+1, end);
+
+        return node;
+    }
+
     public static void main(String[] args){
+        //1 1 1 1 1 1 2 3 4 5
+        //1 1 1 1 1 1 2 2 2 2
+        //1 2 1 3 1 1 4 1 1 5
+        //1 2 1 3 1 1 4 1 5 1
         Solutions solutions = new Solutions();
         char[][] grid = {{"1","1","0","0","0"},{"1","1","0","0","0"},{"0","0","1","0","0"},{"0","0","0","1","1"}};
         solutions.numIslands(grid);
