@@ -598,6 +598,28 @@ public class Solutions {
         return node;
     }
 
+    //26. Remove Duplicates from Sorted Array
+    public int removeDuplicates(int[] nums) {
+
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+        if(nums.length == 1){
+            return 1;
+        }
+
+        int k = 1;
+
+        for(int i=0; i<nums.length-1; i++){
+            if(nums[i+1]>nums[i]){
+                k++;
+                nums[k-1] = nums[i+1];
+            }
+        }
+
+        return k;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
