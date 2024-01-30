@@ -633,6 +633,35 @@ public class Solutions {
         return k;
     }
 
+    //169. Majority Element
+    public int majorityElement(int[] nums) {
+        if(nums == null || nums.length == 0)
+            return 0;
+        if(nums.length == 1)
+            return nums[0];
+
+        Arrays.sort(nums);
+        int prevCount = 0;
+        int prevValue = 0;
+        int currentCount = 1;
+        int currentValue = nums[0];
+
+        for(int i=0; i<nums.length-1; i++){
+            if((nums[i+1]-nums[i])>0){
+                currentCount = 1;
+                currentValue = nums[i+1];
+            }
+            else {
+                currentCount++;
+            }
+            if(currentCount > prevCount){
+                prevCount = currentCount;
+                prevValue = currentValue;
+            }
+        }
+        return prevValue;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
