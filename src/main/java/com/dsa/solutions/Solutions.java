@@ -662,6 +662,30 @@ public class Solutions {
         return prevValue;
     }
 
+    //121. Best Time to Buy and Sell Stock
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length == 0)
+            return 0;
+
+        Map<Integer, Integer> map = new HashMap();
+
+        for(int i=0; i<prices.length; i++){
+            if(!map.containsKey(prices[i]))
+                map.put(prices[i], i);
+        }
+
+        Arrays.sort(prices);
+        for(int j=prices.length-1; j>0; j--){
+            for(int i=0; i<j; i++){
+                if(map.get(prices[j])>map.get(prices[i])){
+                    return prices[j] - prices[i];
+                }
+            }
+        }
+
+        return 0;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
