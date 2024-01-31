@@ -686,62 +686,30 @@ public class Solutions {
         return 0;
     }
 
-    Queue<Integer> queue = new LinkedList();
-    boolean isSameTree = true;
-
-
     //100. Same Tree
     public boolean isSameTree(TreeNode p, TreeNode q) {
+        boolean isSameTree = checkTree(p, q);
+        return isSameTree;
+    }
+
+    public boolean checkTree(TreeNode p, TreeNode q) {
         if(p == null && q == null)
             return true;
         if(p == null || q == null){
             return false;
         }
-        inorderAdd(p);
-        inorderCheck(q);
-        return isSameTree;
-    }
 
-    private void inorderAdd(TreeNode root){
-        if(root == null){
-            queue.add(0);
-            return;
+        if(p.data != q.data){
+            return false;
         }
-        inorderAdd(root.left);
-        queue.add(root.val);
-        inorderAdd(root.right);
-    }
+        boolean sameLeft = checkTree(p.left, q.left);
+        if(!sameLeft)
+            return false;
+        boolean sameRight = checkTree(p.right, q.right);
+        if(!sameRight)
+            return false;
 
-    private void inorderCheck(TreeNode root){
-        if(root == null){
-            if(queue.size()>0){
-                Integer val = queue.poll();
-                if(val != 0){
-                    isSameTree = false;
-                    return;
-                }
-            }
-            else{
-                isSameTree = false;
-                return;
-            }
-            return;
-        }
-        if(!isSameTree)
-            return;
-        inorderCheck(root.left);
-        if(queue.size()>0){
-            Integer val = queue.poll();
-            if(val != root.val){
-                isSameTree = false;
-                return;
-            }
-        }
-        else{
-            isSameTree = false;
-            return;
-        }
-        inorderCheck(root.right);
+        return true;
     }
 
 
