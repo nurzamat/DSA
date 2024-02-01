@@ -730,6 +730,40 @@ public class Solutions {
         invert(root.right);
     }
 
+    //101. Symmetric Tree
+    public boolean isSymmetric(TreeNode root) {
+        return checkSymmetry(root.left, root.right);
+    }
+
+    private TreeNode invertNode(TreeNode root){
+        if(root != null){
+            TreeNode temp = root.left;
+            root.left = root.right;
+            root.right = temp;
+        }
+        return root;
+    }
+
+    public boolean checkSymmetry(TreeNode p, TreeNode q) {
+        if(p == null && q == null)
+            return true;
+        if(p == null || q == null){
+            return false;
+        }
+
+        if(p.data != invertNode(q).data){
+            return false;
+        }
+        boolean sameLeft = checkSymmetry(p.left, q.left);
+        if(!sameLeft)
+            return false;
+        boolean sameRight = checkSymmetry(p.right, q.right);
+        if(!sameRight)
+            return false;
+
+        return true;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2

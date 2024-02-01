@@ -252,3 +252,7 @@ Two binary trees are considered the same if they are structurally identical, and
 226. Invert Binary Tree
 Given the root of a binary tree, invert the tree, and return its root.
 =============
+
+101. Symmetric Tree
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+=======================
