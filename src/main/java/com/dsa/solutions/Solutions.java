@@ -712,6 +712,23 @@ public class Solutions {
         return true;
     }
 
+    //226. Invert Binary Tree
+    public TreeNode invertTree(TreeNode root) {
+        invert(root);
+        return root;
+    }
+
+    private void invert(TreeNode root){
+        if(root == null)
+            return;
+
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        invert(root.left);
+        invert(root.right);
+    }
 
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
