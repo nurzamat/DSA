@@ -844,6 +844,16 @@ public class Solutions {
         }
     }
 
+    //222. Count Complete Tree Nodes
+    public int countNodes(TreeNode root) {
+        if(root == null)
+            return 0;
+        int leftCount = countNodes(root.left);
+        int rightCount = countNodes(root.right);
+
+        return leftCount + rightCount + 1;
+    }
+
 
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
