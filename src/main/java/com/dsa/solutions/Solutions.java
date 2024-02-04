@@ -854,6 +854,50 @@ public class Solutions {
         return leftCount + rightCount + 1;
     }
 
+    int[] preorder;
+    int[] inorder;
+
+    //105. Construct Binary Tree from Preorder and Inorder Traversal
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        this.preorder = preorder;
+        this.inorder = inorder;
+        TreeNode root = getNode(0, preorder.length-1, 0, inorder.length-1);
+        return root;
+    }
+
+    private TreeNode getNode(int pStart, int pEnd, int inStart, int inEnd){
+
+        int val = preorder[pStart];
+        TreeNode root = new TreeNode(val);
+
+        int lInStart = inStart;
+        int lInEnd = 0;
+        int rInStart = 0;
+        int rInEnd = inEnd;
+        for(int i=inStart; i<inEnd; i++){
+            if(inorder[i]==val){
+                lInEnd = i-1;
+                rInStart = i+1;
+            }
+        }
+        int lpStart = pStart + 1;
+        int lpEnd = lpStart + lInEnd - lInStart;
+        int rpStart = lpEnd + 1;
+        int rpEnd = pEnd;
+
+        if(lInStart == lInEnd){
+            root.left = new TreeNode(inorder[lInStart]);
+        }
+        else root.left = getNode(lpStart, lpEnd, lInStart, lInEnd);
+
+        if(rInStart == rInEnd){
+            root.right = new TreeNode(inorder[rInStart]);
+        }
+        else root.right = getNode(rpStart, rpEnd, rInStart, rInEnd);
+
+        return root;
+    }
+
 
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
