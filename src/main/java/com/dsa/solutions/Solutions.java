@@ -978,6 +978,46 @@ public class Solutions {
         return root;
     }
 
+    int popCount = 1;
+    int addCount = 0;
+
+    //117. Populating Next Right Pointers in Each Node II
+    public Node connect(Node root) {
+        if(root == null)
+            return null;
+
+        Queue<Node> queue = new LinkedList();
+        queue.add(root);
+        Node prev = null;
+        while(!queue.isEmpty()){
+            Node node = queue.poll();
+            if(node.left != null){
+                addCount++;
+                queue.add(node.left);
+            }
+            if(node.right != null){
+                addCount++;
+                queue.add(node.right);
+            }
+
+            if(prev == null)
+                prev = node;
+            else {
+                prev.next = node;
+                prev = node;
+            }
+
+            popCount--;
+            if(popCount == 0){
+                popCount = addCount;
+                addCount = 0;
+                prev = null;
+            }
+        }
+
+        return root;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
