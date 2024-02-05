@@ -861,6 +861,22 @@ public class Solutions {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         this.preorder = preorder;
         this.inorder = inorder;
+        if(preorder == null || inorder == null){
+            return null;
+        }
+        if(preorder.length != inorder.length){
+            return null;
+        }
+        if(inorder.length == 1){
+            return new TreeNode(inorder[0]);
+        }
+        if(inorder.length == 2){
+            TreeNode node = new TreeNode(preorder[0]);
+            if(inorder[0]==node.data)
+                node.right = new TreeNode(inorder[1]);
+            else node.left = new TreeNode(inorder[0]);
+            return node;
+        }
         TreeNode root = getNode(0, preorder.length-1, 0, inorder.length-1);
         return root;
     }
@@ -888,12 +904,18 @@ public class Solutions {
         if(lInStart == lInEnd){
             root.left = new TreeNode(inorder[lInStart]);
         }
-        else root.left = getNode(lpStart, lpEnd, lInStart, lInEnd);
+        else {
+            if(lInStart<lInEnd)
+                root.left = getNode(lpStart, lpEnd, lInStart, lInEnd);
+        }
 
         if(rInStart == rInEnd){
             root.right = new TreeNode(inorder[rInStart]);
         }
-        else root.right = getNode(rpStart, rpEnd, rInStart, rInEnd);
+        else {
+            if(rInStart<rInEnd)
+                root.right = getNode(rpStart, rpEnd, rInStart, rInEnd);
+        }
 
         return root;
     }
