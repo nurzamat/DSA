@@ -920,6 +920,63 @@ public class Solutions {
         return root;
     }
 
+    int[] postorder;
+
+    //106. Construct Binary Tree from Inorder and Postorder Traversal
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        this.postorder = postorder;
+        this.inorder = inorder;
+
+        if(postorder == null || inorder == null){
+            return null;
+        }
+        if(postorder.length != inorder.length){
+            return null;
+        }
+        if(inorder.length == 1){
+            return new TreeNode(inorder[0]);
+        }
+        TreeNode root = getNode(0, postorder.length-1, 0, inorder.length-1);
+        return root;
+    }
+
+    private TreeNode getNode(int pStart, int pEnd, int inStart, int inEnd){
+        if(pStart>pEnd || inStart>inEnd)
+            return null;
+        int val = postorder[pEnd];
+        TreeNode root = new TreeNode(val);
+
+        int lInStart = inStart;
+        int lInEnd = 0;
+        int rInStart = 0;
+        int rInEnd = inEnd;
+        for(int i=inStart; i<=inEnd; i++){
+            if(inorder[i]==val){
+                lInEnd = i-1;
+                rInStart = i+1;
+            }
+        }
+        int lpStart = pStart;
+        int lpEnd = lpStart + lInEnd - lInStart;
+        int rpStart = lpEnd + 1;
+        int rpEnd = pEnd-1;
+
+        if(lInStart == lInEnd){
+            root.left = new TreeNode(inorder[lInStart]);
+        }
+        else {
+            root.left = getNode(lpStart, lpEnd, lInStart, lInEnd);
+        }
+
+        if(rInStart == rInEnd){
+            root.right = new TreeNode(inorder[rInStart]);
+        }
+        else {
+            root.right = getNode(rpStart, rpEnd, rInStart, rInEnd);
+        }
+
+        return root;
+    }
 
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
