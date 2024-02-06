@@ -1018,6 +1018,35 @@ public class Solutions {
         return root;
     }
 
+    //114. Flatten Binary Tree to Linked List
+    public void flatten(TreeNode root) {
+        root = preorder(root);
+    }
+
+    public TreeNode preorder(TreeNode root){
+        if(root == null)
+            return null;
+
+        TreeNode left = preorder(root.left);
+        if(left == null)
+            return root;
+        TreeNode right = preorder(root.right);
+
+        if(left.right != null){
+            TreeNode ptr = left.right;
+            while(ptr.right != null){
+                ptr = ptr.right;
+            }
+            ptr.right = right;
+        }
+        else {
+            left.right = right;
+        }
+        root.right = left;
+        root.left = null;
+        return root;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
