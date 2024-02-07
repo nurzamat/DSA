@@ -1088,6 +1088,46 @@ public class Solutions {
         return false;
     }
 
+    //173. Binary Search Tree Iterator
+    class BSTIterator {
+        TreeNode node = new TreeNode(-1);
+        TreeNode ptr = node;
+
+        public BSTIterator(TreeNode root) {
+            inorder(root);
+            ptr = node;
+        }
+
+        public int next() {
+            int val = 0;
+            if(ptr.right != null){
+                val = ptr.right.val;
+                ptr = ptr.right;
+            }
+            return val;
+        }
+
+        public boolean hasNext() {
+            return ptr.right != null;
+        }
+
+        private void inorder(TreeNode root){
+            if(root == null)
+                return;
+            inorder(root.left);
+            ptr.right = new TreeNode(root.val);
+            ptr = ptr.right;
+            inorder(root.right);
+        }
+    }
+
+    /**
+     * Your BSTIterator object will be instantiated and called as such:
+     * BSTIterator obj = new BSTIterator(root);
+     * int param_1 = obj.next();
+     * boolean param_2 = obj.hasNext();
+     */
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
