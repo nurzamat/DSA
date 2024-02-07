@@ -1065,6 +1065,29 @@ public class Solutions {
         return leftSum + rightSum;
     }
 
+    //112. Path Sum
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        return hasSumDFS(root, 0, targetSum);
+    }
+
+    private boolean hasSumDFS(TreeNode node, int currentSum, int targetSum) {
+        if (node == null) {
+            return false;
+        }
+        currentSum = currentSum + node.val;
+        if (node.left == null && node.right == null) {
+            if(currentSum == targetSum)
+                return true;
+        }
+        boolean hasSumLeft = hasSumDFS(node.left, currentSum, targetSum);
+        if(hasSumLeft)
+            return true;
+        boolean hasSumRight = hasSumDFS(node.right, currentSum, targetSum);
+        if(hasSumRight)
+            return true;
+        return false;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
