@@ -1047,6 +1047,24 @@ public class Solutions {
         return root;
     }
 
+    //129. Sum Root to Leaf Numbers
+    public int sumNumbers(TreeNode root) {
+        return sumNumbersDFS(root, 0);
+    }
+
+    private int sumNumbersDFS(TreeNode node, int currentSum) {
+        if (node == null) {
+            return 0;
+        }
+        currentSum = currentSum * 10 + node.val;
+        if (node.left == null && node.right == null) {
+            return currentSum;
+        }
+        int leftSum = sumNumbersDFS(node.left, currentSum);
+        int rightSum = sumNumbersDFS(node.right, currentSum);
+        return leftSum + rightSum;
+    }
+
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5
         //1 1 1 1 1 1 2 2 2 2
