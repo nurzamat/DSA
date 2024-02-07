@@ -1028,9 +1028,9 @@ public class Solutions {
             return null;
 
         TreeNode left = preorder(root.left);
+        TreeNode right = preorder(root.right);
         if(left == null)
             return root;
-        TreeNode right = preorder(root.right);
 
         if(left.right != null){
             TreeNode ptr = left.right;
