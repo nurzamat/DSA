@@ -1121,12 +1121,81 @@ public class Solutions {
         }
     }
 
-    /**
-     * Your BSTIterator object will be instantiated and called as such:
-     * BSTIterator obj = new BSTIterator(root);
-     * int param_1 = obj.next();
-     * boolean param_2 = obj.hasNext();
-     */
+
+    //130. Surrounded Regions
+    public void solve(char[][] board) {
+
+        int m = board.length;
+        int n = board[0].length;
+
+        if(m == 1 || n == 1){
+            return;
+        }
+
+        Queue<Spot> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[m][n];
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(board[i][j]=='O' && !visited[i][j]){
+                    Spot spot = new Spot(i,j);
+                    board[i][j] = 'T';
+                    visited[i][j] = true;
+                    queue.add(spot);
+                    boolean borderFound = false;
+
+                    while (!queue.isEmpty()){
+                        spot = queue.poll();
+                        //left neighbor
+                        if(spot.j-1>=0 && board[spot.i][spot.j-1]=='O'){
+                            board[spot.i][spot.j-1] = 'T';
+                            visited[spot.i][spot.j-1] = true;
+                            queue.add(new Spot(spot.i, spot.j-1));
+                        }
+                        //above neighbor
+                        if(spot.i-1>=0 && board[spot.i-1][spot.j]=='O'){
+                            board[spot.i-1][spot.j] = 'T';
+                            visited[spot.i-1][spot.j] = true;
+                            queue.add(new Spot(spot.i-1, spot.j));
+                        }
+                        //right neighbor
+                        if(spot.j+1<n && board[spot.i][spot.j+1]=='O'){
+                            board[spot.i][spot.j+1] = 'T';
+                            visited[spot.i][spot.j+1]= true;
+                            queue.add(new Spot(spot.i, spot.j+1));
+                        }
+                        //below neighbor
+                        if(spot.i+1<m && board[spot.i+1][spot.j]=='O'){
+                            board[spot.i+1][spot.j] = 'T';
+                            visited[spot.i+1][spot.j] = true;
+                            queue.add(new Spot(spot.i+1, spot.j));
+                        }
+
+                        //check border
+                        if(spot.j-1<0 || spot.i-1<0 || spot.j+1>=n || spot.i+1>=m){
+                            borderFound = true;
+                        }
+                    }
+
+                    for(int l=0; l<m; l++){
+                        for(int k=0; k<n; k++){
+                            if(!borderFound){
+                                if(board[l][k]=='T'){
+                                    board[l][k]='X';
+                                }
+                            }
+                            else
+                            {
+                                if(board[l][k]=='T'){
+                                    board[l][k]='O';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public static void main(String[] args){
         //1 1 1 1 1 1 2 3 4 5

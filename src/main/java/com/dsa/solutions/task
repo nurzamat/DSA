@@ -360,3 +360,9 @@ Notice that by initializing the pointer to a non-existent smallest number, the f
 
 You may assume that next() calls will always be valid. That is, there will be at least a next number in the in-order traversal when next() is called.
 =======================================
+
+130. Surrounded Regions
+Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.
+
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+========================================
