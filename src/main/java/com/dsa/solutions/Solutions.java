@@ -1197,13 +1197,52 @@ public class Solutions {
         }
     }
 
-    public static void main(String[] args){
-        //1 1 1 1 1 1 2 3 4 5
-        //1 1 1 1 1 1 2 2 2 2
-        //1 2 1 3 1 1 4 1 1 5
-        //1 2 1 3 1 1 4 1 5 1
-        Solutions solutions = new Solutions();
-        char[][] grid = {{"1","1","0","0","0"},{"1","1","0","0","0"},{"0","0","1","0","0"},{"0","0","0","1","1"}};
-        solutions.numIslands(grid);
+    //133. Clone Graph
+    public Node cloneGraph(Node node) {
+        if(node == null)
+            return null;
+        Map<Integer, Node> map = new HashMap();
+        Queue<Node> queue = new LinkedList();
+
+        Node clone = new Node(node.val);
+        map.put(clone.val, clone);
+        queue.add(node);
+        Node temp;
+        Node visited;
+        Node n1;
+        while(!queue.isEmpty()){
+            temp = queue.poll();
+            visited = map.get(temp.val);
+            for(Node n: temp.neighbors){
+                if(!map.containsKey(n.val)){
+                    n1 = new Node(n.val);
+                    map.put(n1.val, n1);
+                    visited.neighbors.add(n1);
+                    queue.add(n);
+                }
+                else{
+                    visited.neighbors.add(map.get(n.val));
+                }
+            }
+        }
+
+        return clone;
+    }
+
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+        public Node() {
+            val = 0;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val) {
+            val = _val;
+            neighbors = new ArrayList<Node>();
+        }
+        public Node(int _val, ArrayList<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
     }
 }
