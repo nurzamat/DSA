@@ -1229,6 +1229,58 @@ public class Solutions {
         return clone;
     }
 
+    //207. Course Schedule
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+
+        List<List<Integer>> graph = new ArrayList();
+        for(int i=0; i<numCourses; i++){
+            graph.add(new ArrayList());
+        }
+
+        //Create an array to store the in-degree (number of prerequisites) for each course
+        int[] inDegrees = new int[numCourses];
+
+        //Populate the graph and update the in-degrees based on prerequisites
+        for(int[] prerequisite : prerequisites){
+            int course = prerequisite[0];
+            int prerequisiteCourse = prerequisite[1];
+            graph.get(prerequisiteCourse).add(course);
+            //Increment the in-degree of the course
+            inDegrees[course]++;
+        }
+
+        //Queue to hold courses with in-degree of 0
+        Queue<Integer> queue = new LinkedList();
+
+        //Enqueue all courses wich have no prerequisites
+        for(int i=0; i<numCourses; i++){
+            if(inDegrees[i]==0){
+                queue.offer(i);
+            }
+        }
+
+        //Counter for number of courses that have been processed
+        int processedCourses = 0;
+
+        //Process the courses in the queue
+        while(!queue.isEmpty()){
+            int course = queue.poll();
+            processedCourses++;
+
+            //Iterate over the neighbors of the current course
+            for(int neighbor : graph.get(course)){
+                //Decrement the in-degreee of each neighbor, since we have processed one of their prerequisites
+                inDegrees[neighbor]--;
+                if(inDegrees[neighbor] == 0){
+                    queue.offer(neighbor);
+                }
+            }
+        }
+        //If the number of processed courses equals the total number of courses, all can be finished
+        return processedCourses == numCourses;
+
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
