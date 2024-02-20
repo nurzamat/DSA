@@ -1281,6 +1281,52 @@ public class Solutions {
 
     }
 
+    //210. Course Schedule II
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+
+        List<List<Integer>> graph = new ArrayList();
+        for(int i=0; i<numCourses; i++){
+            graph.add(new ArrayList());
+        }
+
+        int[] inDegrees = new int[numCourses];
+
+        for(int[] prerequisite : prerequisites){
+            int course = prerequisite[0];
+            int prerequisiteCourse = prerequisite[1];
+            graph.get(prerequisiteCourse).add(course);
+
+            inDegrees[course]++;
+        }
+
+        Queue<Integer> queue = new LinkedList();
+
+        for(int i=0; i<numCourses; i++){
+            if(inDegrees[i] == 0){
+                queue.add(i);
+            }
+        }
+
+        int[] result = new int[numCourses];
+        int cnt = 0;
+        while(!queue.isEmpty()){
+            int course  = queue.poll();
+            result[cnt] = course;
+            cnt++;
+
+            for(Integer neighbor: graph.get(course)){
+                inDegrees[neighbor]--;
+                if(inDegrees[neighbor] == 0){
+                    queue.add(neighbor);
+                }
+            }
+        }
+        if(cnt == numCourses){
+            return result;
+        }
+        return new int[0];
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
