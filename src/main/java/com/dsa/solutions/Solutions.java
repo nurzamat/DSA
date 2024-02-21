@@ -1327,6 +1327,57 @@ public class Solutions {
         return new int[0];
     }
 
+    //909. Snakes and Ladders
+    public int snakesAndLadders(int[][] board) {
+
+        int length = board.length;
+        boolean directionRight = false;
+        int currSquare = 0;
+        int destSquare = 0;
+        int moves = 0;
+
+        for(int i=length-1; i>=0; i--){
+            if(!directionRight)
+                directionRight = true;
+            else directionRight = false;
+
+            if(directionRight){
+                for(int j=0; j<length; j++){
+                    currSquare++;
+                    if(board[i][j] != -1){
+                        destSquare = board[i][j];
+                    }
+                    if(currSquare == destSquare){
+                        moves++;
+                    }
+                    if(currSquare>destSquare){
+                        currSquare = destSquare;
+                        int diff = currSquare - destSquare;
+                        j=j-diff;
+                    }
+                }
+            }
+            else {
+                for(int j=length-1; j>=0; j--){
+                    currSquare++;
+                    if(board[i][j] != -1){
+                        destSquare = board[i][j];
+                    }
+                    if(currSquare == destSquare){
+                        moves++;
+                    }
+                    if(currSquare>destSquare){
+                        currSquare = destSquare;
+                        int diff = currSquare - destSquare;
+                        j=j+diff;
+                    }
+                }
+            }
+        }
+
+        return moves+1;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
