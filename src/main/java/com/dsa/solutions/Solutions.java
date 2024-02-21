@@ -1344,38 +1344,42 @@ public class Solutions {
             if(directionRight){
                 for(int j=0; j<length; j++){
                     currSquare++;
-                    if(board[i][j] != -1){
+                    if(board[i][j] != -1 && destSquare == 0){
                         destSquare = board[i][j];
                     }
                     if(currSquare == destSquare){
+                        destSquare = 0;
                         moves++;
-                    }
-                    if(currSquare>destSquare){
-                        currSquare = destSquare;
+                    } else if(destSquare != 0 && currSquare>destSquare){
                         int diff = currSquare - destSquare;
+                        currSquare = destSquare;
+                        destSquare = 0;
                         j=j-diff;
+                        moves++;
                     }
                 }
             }
             else {
                 for(int j=length-1; j>=0; j--){
                     currSquare++;
-                    if(board[i][j] != -1){
+                    if(board[i][j] != -1 && destSquare == 0){
                         destSquare = board[i][j];
                     }
                     if(currSquare == destSquare){
+                        destSquare = 0;
                         moves++;
-                    }
-                    if(currSquare>destSquare){
-                        currSquare = destSquare;
+                    } else if(destSquare != 0 && currSquare>destSquare){
                         int diff = currSquare - destSquare;
+                        currSquare = destSquare;
+                        destSquare = 0;
                         j=j+diff;
+                        moves++;
                     }
                 }
             }
         }
 
-        return moves+1;
+        return moves;
     }
 
     class Node {
