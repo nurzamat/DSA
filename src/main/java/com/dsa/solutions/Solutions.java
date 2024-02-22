@@ -1331,10 +1331,15 @@ public class Solutions {
     public int snakesAndLadders(int[][] board) {
 
         int length = board.length;
+        if(length == 2)
+            return 1;
         boolean directionRight = false;
         int currSquare = 0;
-        int destSquare = 0;
         int moves = 0;
+
+        Map<Integer, Integer> destMap = new HashMap();
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(0);
 
         for(int i=length-1; i>=0; i--){
             if(!directionRight)
@@ -1344,39 +1349,42 @@ public class Solutions {
             if(directionRight){
                 for(int j=0; j<length; j++){
                     currSquare++;
-                    if(board[i][j] != -1 && destSquare == 0){
-                        destSquare = board[i][j];
+                    list.add(currSquare);
+                    if(board[i][j] != -1){
+                        destMap.put(currSquare, board[i][j]);
                     }
-                    if(currSquare == destSquare){
-                        destSquare = 0;
-                        moves++;
-                    } else if(destSquare != 0 && currSquare>destSquare){
-                        int diff = currSquare - destSquare;
-                        currSquare = destSquare;
-                        destSquare = 0;
-                        j=j-diff;
-                        moves++;
-                    }
+                    else destMap.put(currSquare, -1);
                 }
             }
             else {
                 for(int j=length-1; j>=0; j--){
                     currSquare++;
-                    if(board[i][j] != -1 && destSquare == 0){
-                        destSquare = board[i][j];
+                    list.add(currSquare);
+                    if(board[i][j] != -1){
+                        destMap.put(currSquare, board[i][j]);
                     }
-                    if(currSquare == destSquare){
-                        destSquare = 0;
-                        moves++;
-                    } else if(destSquare != 0 && currSquare>destSquare){
-                        int diff = currSquare - destSquare;
-                        currSquare = destSquare;
-                        destSquare = 0;
-                        j=j+diff;
-                        moves++;
-                    }
+                    else destMap.put(currSquare, -1);
                 }
             }
+        }
+
+        int cnt = 0;
+        int max = 0;
+        for(int i=1; i<list.size(); i++){
+            int current = list.get(i);
+            cnt++;
+            if(destMap.get(current)>max)
+                max = destMap.get(current);
+            if(cnt == 7){
+                i = max;
+                cnt = 0;
+                max = 0;
+                moves++;
+            }
+        }
+
+        if(cnt>0){
+            moves++;
         }
 
         return moves;
