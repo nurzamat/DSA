@@ -1338,8 +1338,6 @@ public class Solutions {
         int moves = 0;
 
         Map<Integer, Integer> destMap = new HashMap();
-        List<Integer> list = new ArrayList<Integer>();
-        list.add(0);
 
         for(int i=length-1; i>=0; i--){
             if(!directionRight)
@@ -1349,36 +1347,27 @@ public class Solutions {
             if(directionRight){
                 for(int j=0; j<length; j++){
                     currSquare++;
-                    list.add(currSquare);
-                    if(board[i][j] != -1){
-                        destMap.put(currSquare, board[i][j]);
-                    }
-                    else destMap.put(currSquare, -1);
+                    destMap.put(currSquare, board[i][j]);
                 }
             }
             else {
                 for(int j=length-1; j>=0; j--){
                     currSquare++;
-                    list.add(currSquare);
-                    if(board[i][j] != -1){
-                        destMap.put(currSquare, board[i][j]);
-                    }
-                    else destMap.put(currSquare, -1);
+                    destMap.put(currSquare, board[i][j]);
                 }
             }
         }
 
         int cnt = 0;
-        int max = 0;
-        for(int i=1; i<list.size(); i++){
-            int current = list.get(i);
+        int max = -1;
+        for(int i=1; i<length*length+1; i++){
             cnt++;
-            if(destMap.get(current)>max)
-                max = destMap.get(current);
+            if(destMap.get(i)>max)
+                max = destMap.get(i);
             if(cnt == 7){
                 i = max;
                 cnt = 0;
-                max = 0;
+                max = -1;
                 moves++;
             }
         }
