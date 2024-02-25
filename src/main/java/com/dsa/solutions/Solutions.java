@@ -1431,6 +1431,26 @@ public class Solutions {
         return new int[] {boardSize - 1 - row, col};
     }
 
+    //433. Minimum Genetic Mutation
+    public int minMutation(String startGene, String endGene, String[] bank) {
+
+        if(bank.length == 0)
+            return -1;
+
+        char[] startArr = startGene.toCharArray();
+        char[] endArr = endGene.toCharArray();
+
+        int length = startArr.length;
+        int mutCount = 0;
+
+        for(int i=0; i<length; i++){
+            if(startArr[i] != endArr[i])
+                mutCount++;
+        }
+
+        return mutCount;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
