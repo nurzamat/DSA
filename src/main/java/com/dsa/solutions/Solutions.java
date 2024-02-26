@@ -1333,50 +1333,65 @@ public class Solutions {
         int length = board.length;
         if(length == 2)
             return 1;
+
+        Map<Integer, Integer> destMap = getDestinationMap(board);
+
+        boolean[] visited = new boolean[length*length+1];
+        Queue<Integer> queue = new LinkedList();
+
+        visited[1] = true;
+        queue.add(1);
+        int cnt = 0;
+        int in = 0;
+        int out = 1;
+        while(!queue.isEmpty()){
+            int current = queue.poll();
+            if(current == length*length)
+                return cnt;
+            for(int i=current+1; i<=Math.min(current+6, length*length); i++){
+                int next = destMap.get(i) != -1?destMap.get(i):i;
+                if(!visited[next]){
+                    visited[next] = true;
+                    queue.add(next);
+                    in++;
+                }
+            }
+            out--;
+            if(out<=0){
+                out = in;
+                in = 0;
+                cnt++;
+            }
+        }
+
+        return -1;
+    }
+
+    private  Map<Integer, Integer> getDestinationMap(int[][] board){
         boolean directionRight = false;
         int currSquare = 0;
-        int moves = 0;
-
         Map<Integer, Integer> destMap = new HashMap();
 
-        for(int i=length-1; i>=0; i--){
+        for(int i=board.length-1; i>=0; i--){
             if(!directionRight)
                 directionRight = true;
             else directionRight = false;
 
             if(directionRight){
-                for(int j=0; j<length; j++){
+                for(int j=0; j<board.length; j++){
                     currSquare++;
                     destMap.put(currSquare, board[i][j]);
                 }
             }
             else {
-                for(int j=length-1; j>=0; j--){
+                for(int j=board.length-1; j>=0; j--){
                     currSquare++;
                     destMap.put(currSquare, board[i][j]);
                 }
             }
         }
 
-        int cnt = 0;
-        int max = -1;
-        for(int i=1; i<length*length+1; i++){
-            cnt++;
-            if(destMap.get(i)>max)
-                max = destMap.get(i);
-            if(cnt == 7){
-                i = max;
-                cnt = 0;
-                max = -1;
-                moves++;
-            }
-        }
-
-        if(cnt>0){
-            moves++;
-        }
-
-        return moves;
+        return destMap;
     }
 
 
