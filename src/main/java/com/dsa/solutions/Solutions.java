@@ -1437,18 +1437,62 @@ public class Solutions {
         if(bank.length == 0)
             return -1;
 
-        char[] startArr = startGene.toCharArray();
-        char[] endArr = endGene.toCharArray();
+        boolean[] visited = new boolean[bank.length];
 
-        int length = startArr.length;
-        int mutCount = 0;
-
-        for(int i=0; i<length; i++){
-            if(startArr[i] != endArr[i])
-                mutCount++;
+        Queue<Integer> queue = new LinkedList();
+        List<Integer> nextList = getBankMutation(bank, startGene);
+        int cnt = 0;
+        int in = 0;
+        int out = 0;
+        for (int index:nextList) {
+            visited[index] = true;
+            queue.add(index);
+            out++;
         }
 
-        return mutCount;
+        while(!queue.isEmpty()){
+            int index = queue.poll();
+            String gene = bank[index];
+            if(gene.equals(endGene))
+                return cnt+1;
+            nextList = getBankMutation(bank, gene);
+            for (int idx:nextList) {
+                if(!visited[idx]){
+                    visited[idx] = true;
+                    queue.add(idx);
+                    in++;
+                }
+            }
+
+            out--;
+            if(out <= 0){
+                cnt++;
+                out = in;
+                in = 0;
+            }
+        }
+
+        return -1;
+    }
+
+    private List<Integer> getBankMutation(String[] bank, String gene){
+        char[] startArr = gene.toCharArray();
+        int length = startArr.length;
+        List<Integer> list = new ArrayList<>();
+        for(int i=0; i<bank.length; i++){
+            char[] endArr = bank[i].toCharArray();
+            int mutCount = 0;
+
+            for(int j=0; j<length; j++){
+                if(startArr[j] != endArr[j]){
+                    mutCount++;
+                }
+            }
+            if(mutCount ==  1){
+                list.add(i);
+            }
+        }
+        return list;
     }
 
     class Node {
