@@ -1511,39 +1511,22 @@ public class Solutions {
     }
 
     //399. Evaluate Division
+    Map<String, Double> map = new HashMap();
+
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
 
-
-        Map<String, Double> map = new HashMap();
-
         //fill hashmap with values
-        for(int i=0; i<equations.size(); i++){
-            List<String> list = equations.get(i);
-            String var1 = list.get(0);
-            String var2 = list.get(1);
-
-            if(!map.containsKey(var1) && !map.containsKey(var2)){
-                //suppose var2 = 1
-                map.put(var2, 1.00);
-                double var1Val = 1*values[i];
-                map.put(var1, var1Val);
-            }
-            else if(!map.containsKey(var2)){
-                double var1Val = map.get(var1);
-                map.put(var2, var1Val/values[i]);
-            }
-            else{
-                double var2Val = map.get(var2);
-                map.put(var1, var2Val*values[i]);
-            }
-        }
+        List<String> equation = equations.get(0);
+        String var1 = equation.get(0);
+        String var2 = equation.get(1);
+        map.put(var1, values[0]*findValue(var2, equations, values));
 
         double[] result = new double[queries.size()];
 
         for(int i=0; i<queries.size(); i++){
             List<String> list = queries.get(i);
-            String var1 = list.get(0);
-            String var2 = list.get(1);
+            var1 = list.get(0);
+            var2 = list.get(1);
 
             if(!map.containsKey(var1) || !map.containsKey(var2)){
                 result[i] = -1;
@@ -1555,17 +1538,23 @@ public class Solutions {
         return result;
     }
 
-    private double findValue(String var, List<List<String>> equations){
-
+    private double findValue(String var, List<List<String>> equations, double[] values){
+        if(map.containsKey(var)){
+            return map.get(var);
+        }
         for(int i=0; i<equations.size(); i++){
             List<String> list = equations.get(i);
             String var1 = list.get(0);
             String var2 = list.get(1);
 
             if(var.equals(var1)){
-                return findValue(var2, equations);
+                map.put(var, values[i]*findValue(var2, equations, values));
+                return map.get(var);
             }
         }
+
+        map.put(var, 1.00);
+        return map.get(var);
 
     }
 
