@@ -1513,6 +1513,7 @@ public class Solutions {
     //399. Evaluate Division
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
 
+
         Map<String, Double> map = new HashMap();
 
         //fill hashmap with values
@@ -1552,6 +1553,20 @@ public class Solutions {
             }
         }
         return result;
+    }
+
+    private double findValue(String var, List<List<String>> equations){
+
+        for(int i=0; i<equations.size(); i++){
+            List<String> list = equations.get(i);
+            String var1 = list.get(0);
+            String var2 = list.get(1);
+
+            if(var.equals(var1)){
+                return findValue(var2, equations);
+            }
+        }
+
     }
 
     class Node {
