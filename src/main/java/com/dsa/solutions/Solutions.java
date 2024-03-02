@@ -1512,14 +1512,27 @@ public class Solutions {
 
     //399. Evaluate Division
     Map<String, Double> map = new HashMap();
-
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
 
         //fill hashmap with values
-        List<String> equation = equations.get(0);
-        String var1 = equation.get(0);
-        String var2 = equation.get(1);
-        map.put(var1, values[0]*findValue(var2, equations, values));
+        String var1 = null;
+        String var2 = null;
+        List<List<String>> graph = new ArrayList();
+        List<String> graphList = new ArrayList();
+
+        for(int i=0; i<equations.size(); i++){
+            List<String> equation = equations.get(i);
+            var1 = equation.get(0);
+            graphList.add(var1);
+            if(!map.containsKey(var1)){
+                if(!graphList.isEmpty()){
+                    graph.add(graphList);
+                    graphList = new ArrayList();
+                }
+                var2 = equation.get(1);
+                map.put(var1, values[i]*findValue(var2, equations, values));
+            }
+        }
 
         double[] result = new double[queries.size()];
 
@@ -1532,10 +1545,35 @@ public class Solutions {
                 result[i] = -1;
             }
             else{
-                result[i] = map.get(var1)/map.get(var2);
+                if(checkInGraph(graph, var1, var2)){
+                    result[i]=map.get(var1)/map.get(var2);
+                }
+                else{
+                    result[i]=-1;
+                }
             }
         }
         return result;
+    }
+
+    private boolean checkInGraph(List<List<String>> graph, String var1, String var2){
+
+        for(int i=0; i<graph.size(); i++){
+            boolean foundVar1 = false;
+            boolean foundVar2 = false;
+
+            List<String> list = graph.get(i);
+
+            for(String value:list){
+                if(value.equals(var1))
+                    foundVar1=true;
+                if(value.equals(var2))
+                    foundVar2=true;
+            }
+            if(foundVar1 && foundVar2)
+                return true;
+        }
+        return false;
     }
 
     private double findValue(String var, List<List<String>> equations, double[] values){
