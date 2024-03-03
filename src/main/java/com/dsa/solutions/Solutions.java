@@ -1511,89 +1511,97 @@ public class Solutions {
     }
 
     //399. Evaluate Division
-    Map<String, Double> map = new HashMap();
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
 
         //fill hashmap with values
         String var1 = null;
         String var2 = null;
-        List<List<String>> graph = new ArrayList();
-        List<String> graphList = new ArrayList();
+        List<String> list = null;
 
+        Map<String, Integer> outMap = new HashMap();
+        //find last elements
         for(int i=0; i<equations.size(); i++){
-            List<String> equation = equations.get(i);
-            var1 = equation.get(0);
-            graphList.add(var1);
-            if(!map.containsKey(var1)){
-                if(!graphList.isEmpty()){
-                    graph.add(graphList);
-                    graphList = new ArrayList();
+            list = equations.get(i);
+            var1 = list.get(0);
+            var2 = list.get(1);
+            if(!outMap.containsKey(var1)){
+                outMap.put(var1, 1);
+            }
+            else{
+                outMap.put(var1, outMap.get(var1)+1);
+            }
+
+            if(!outMap.containsKey(var2)){
+                outMap.put(var2, 0);
+            }
+        }
+
+        List<Map<String, Double>> graphMap = new ArrayList();
+        Queue<String> queue = new LinkedList();
+
+        List<String> lastElements = new ArrayList();
+        for (Map.Entry<String, Integer> entry : outMap.entrySet()) {
+            if(entry.getValue() == 0){
+                if(!checkInGraphMap(graphMap, entry.getKey())){
+                    Map<String, Double> map = new HashMap();
+                    map.put(entry.getKey(), 1.00);
+                    queue.add(entry.getKey());
+
+                    while(!queue.isEmpty()){
+                        String element = queue.poll();
+
+                        for(int i=0; i<equations.size(); i++){
+                            list = equations.get(i);
+                            var1 = list.get(0);
+                            var2 = list.get(1);
+                            if(var2.equals(element)){
+                                if(!map.containsKey(var1)){
+                                    map.put(var1, map.get(var2)*values[i]);
+                                    queue.add(var1);
+                                }
+                            }
+                            if(var1.equals(element)){
+                                if(!map.containsKey(var2)){
+                                    map.put(var2, map.get(var1)/values[i]);
+                                    queue.add(var2);
+                                }
+                            }
+                        }
+                    }
+                    graphMap.add(map);
                 }
-                var2 = equation.get(1);
-                map.put(var1, values[i]*findValue(var2, equations, values));
             }
         }
 
         double[] result = new double[queries.size()];
 
         for(int i=0; i<queries.size(); i++){
-            List<String> list = queries.get(i);
+            list = queries.get(i);
             var1 = list.get(0);
             var2 = list.get(1);
-
-            if(!map.containsKey(var1) || !map.containsKey(var2)){
-                result[i] = -1;
-            }
-            else{
-                if(checkInGraph(graph, var1, var2)){
-                    result[i]=map.get(var1)/map.get(var2);
-                }
-                else{
-                    result[i]=-1;
-                }
-            }
+            result[i]=getDivision(graphMap, var1, var2);
         }
         return result;
     }
 
-    private boolean checkInGraph(List<List<String>> graph, String var1, String var2){
-
-        for(int i=0; i<graph.size(); i++){
-            boolean foundVar1 = false;
-            boolean foundVar2 = false;
-
-            List<String> list = graph.get(i);
-
-            for(String value:list){
-                if(value.equals(var1))
-                    foundVar1=true;
-                if(value.equals(var2))
-                    foundVar2=true;
+    private boolean checkInGraphMap(List<Map<String, Double>> graphMap, String element){
+        if(graphMap.size()>0){
+            for(Map<String, Double> map: graphMap){
+                if(map.containsKey(element)){
+                    return true;
+                }
             }
-            if(foundVar1 && foundVar2)
-                return true;
         }
         return false;
     }
 
-    private double findValue(String var, List<List<String>> equations, double[] values){
-        if(map.containsKey(var)){
-            return map.get(var);
-        }
-        for(int i=0; i<equations.size(); i++){
-            List<String> list = equations.get(i);
-            String var1 = list.get(0);
-            String var2 = list.get(1);
-
-            if(var.equals(var1)){
-                map.put(var, values[i]*findValue(var2, equations, values));
-                return map.get(var);
+    private Double getDivision(List<Map<String, Double>> graphMap, String var1, String var2){
+        for(Map<String, Double> map: graphMap){
+            if(map.containsKey(var1) && map.containsKey(var2)){
+                return map.get(var1)/map.get(var2);
             }
         }
-
-        map.put(var, 1.00);
-        return map.get(var);
-
+        return -1.00;
     }
 
     class Node {
