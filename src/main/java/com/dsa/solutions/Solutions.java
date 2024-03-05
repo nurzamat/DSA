@@ -1604,6 +1604,38 @@ public class Solutions {
         return -1.00;
     }
 
+
+    //383. Ransom Note
+    public boolean canConstruct(String ransomNote, String magazine) {
+        //edge cases
+        if(magazine == null)
+            return false;
+        //store letters from magazine in map
+        Map<Character, Integer> map = new HashMap();
+        char[] magArr = magazine.toCharArray();
+        for(int i=0; i<magArr.length; i++){
+            if(!map.containsKey(magArr[i])){
+                map.put(magArr[i], 1);
+            }
+            else{
+                map.put(magArr[i], map.get(magArr[i])+1);
+            }
+        }
+
+        //check letters from ransomNote
+        char[] arr = ransomNote.toCharArray();
+        for(int i=0; i<arr.length; i++){
+            if(!map.containsKey(arr[i]) || map.get(arr[i])<1){
+                return false;
+            }
+            else{
+                map.put(arr[i], map.get(arr[i])-1);
+            }
+        }
+
+        return true;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
