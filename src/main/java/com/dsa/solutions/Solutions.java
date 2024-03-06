@@ -664,26 +664,24 @@ public class Solutions {
 
     //121. Best Time to Buy and Sell Stock
     public int maxProfit(int[] prices) {
-        if(prices == null || prices.length == 0)
-            return 0;
+        // Initialize 'maxProfit' to 0, which is the minimum profit that can be made.
+        int maxProfit = 0;
 
-        Map<Integer, Integer> map = new HashMap();
+        // Assume the first price is the minimum buying price.
+        int minPrice = prices[0];
 
-        for(int i=0; i<prices.length; i++){
-            if(!map.containsKey(prices[i]))
-                map.put(prices[i], i);
+        // Loop through all the prices to find the maximum profit.
+        for (int price : prices) {
+            // Calculate the maximum profit by comparing the current 'maxProfit'
+            // with the difference of the current price and the 'minPrice'.
+            maxProfit = Math.max(maxProfit, price - minPrice);
+
+            // Update the 'minPrice' if a lower price is found.
+            minPrice = Math.min(minPrice, price);
         }
 
-        Arrays.sort(prices);
-        for(int j=prices.length-1; j>0; j--){
-            for(int i=0; i<j; i++){
-                if(map.get(prices[j])>map.get(prices[i])){
-                    return prices[j] - prices[i];
-                }
-            }
-        }
-
-        return 0;
+        // Return the maximum profit that can be achieved.
+        return maxProfit;
     }
 
     //100. Same Tree
