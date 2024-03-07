@@ -1657,6 +1657,29 @@ public class Solutions {
         return str1.equals(str2);
     }
 
+    //125. Valid Palindrome 2-nd solution
+    public boolean isPalindrome2(String s) {
+        if(s == null || s.trim() == "")
+            return true;
+        String str1 = "";
+
+        for(int i = 0; i<s.length(); i++){
+            if(Character.isLetter(s.charAt(i))){
+                str1 = str1 + String.valueOf(s.charAt(i)).toLowerCase();
+            }
+            else if(Character.isDigit(s.charAt(i))){
+                str1 = str1 + s.charAt(i);
+            }
+        }
+
+        for(int i = 0; i<str1.length()/2; i++){
+            if(str1.charAt(i) != str1.charAt(str1.length()-1-i))
+                return false;
+        }
+
+        return true;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
