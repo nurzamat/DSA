@@ -1635,7 +1635,7 @@ public class Solutions {
     }
 
     //125. Valid Palindrome
-    public boolean isPalindrome(String s) {
+    public boolean isPalindrome1(String s) {
         if(s == null || s.trim() == "")
             return true;
         String str1 = "";
@@ -1678,6 +1678,45 @@ public class Solutions {
         }
 
         return true;
+    }
+
+    //125. Valid Palindrome best solution via 2 pointer method
+    public boolean isPalindrome(String s) {
+        if(s == null || s.trim() == "")
+            return true;
+
+        int left = 0;
+        int right = s.length()-1;
+
+        while(left < right){
+            if(isLetterOrDigit(s.charAt(left)) && isLetterOrDigit(s.charAt(right))){
+                if(Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right)))
+                    return false;
+                else{
+                    left++;
+                    right--;
+                }
+            }
+            else if(!isLetterOrDigit(s.charAt(left)) && !isLetterOrDigit(s.charAt(right))){
+                left++;
+                right--;
+            }
+            else if(!isLetterOrDigit(s.charAt(left))){
+                left++;
+            }
+            else{
+                right--;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isLetterOrDigit(char ch){
+        if(Character.isLetter(ch) || Character.isDigit(ch)){
+            return true;
+        }
+        return false;
     }
 
     class Node {
