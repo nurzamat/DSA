@@ -1713,6 +1713,7 @@ public class Solutions {
     }
 
     /*
+    //compact solution
     public boolean isPalindrome(String s) {
         if (s.length() == 0)
             return false;
