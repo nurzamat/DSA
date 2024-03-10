@@ -1738,6 +1738,23 @@ public class Solutions {
     }
      */
 
+    //392. Is Subsequence
+    public boolean isSubsequence(String s, String t) {
+        if(s == null || s.length() == 0)
+            return true;
+
+        int sPos = 0;
+        int sLength = s.length();
+
+        for(int i=0; i<t.length(); i++){
+            if(sPos<sLength && t.charAt(i) == s.charAt(sPos)){
+                sPos++;
+            }
+        }
+
+        return sPos == s.length();
+    }
+
     private boolean isLetterOrDigit(char ch){
         if(Character.isLetter(ch) || Character.isDigit(ch)){
             return true;
