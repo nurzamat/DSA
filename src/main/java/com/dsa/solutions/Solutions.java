@@ -1738,6 +1738,13 @@ public class Solutions {
     }
      */
 
+    private boolean isLetterOrDigit(char ch){
+        if(Character.isLetter(ch) || Character.isDigit(ch)){
+            return true;
+        }
+        return false;
+    }
+
     //392. Is Subsequence
     public boolean isSubsequence(String s, String t) {
         if(s == null || s.length() == 0)
@@ -1755,11 +1762,26 @@ public class Solutions {
         return sPos == s.length();
     }
 
-    private boolean isLetterOrDigit(char ch){
-        if(Character.isLetter(ch) || Character.isDigit(ch)){
-            return true;
+    //167. Two Sum II - Input Array Is Sorted
+    public int[] twoSum(int[] numbers, int target) {
+
+        int ptr1 = 0;
+        int ptr2 = numbers.length-1;
+        int sum;
+
+        while(ptr2 > ptr1){
+            sum = numbers[ptr1]+numbers[ptr2];
+            if(sum == target){
+                return new int[] {ptr1+1, ptr2+1};
+            }
+            else if(sum > target){
+                ptr2--;
+            }
+            else if(sum < target){
+                ptr1++;
+            }
         }
-        return false;
+        return new int[] {-1, -1};
     }
 
     class Node {
