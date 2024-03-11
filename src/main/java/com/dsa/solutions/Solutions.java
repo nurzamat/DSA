@@ -1784,6 +1784,46 @@ public class Solutions {
         return new int[] {-1, -1};
     }
 
+    //11. Container With Most Water
+    public int maxArea(int[] height) {
+        int maxArea = 0;
+        if(height == null || height.length == 0 || height.length == 1)
+            return maxArea;
+
+        int currArea = 0;
+        int maxHeight = 0;
+        int minHeight = 0;
+        int left = 0;
+        int right = height.length-1;
+
+        while(left < right){
+
+            if(height[left] == height[right]){
+                minHeight = height[left];
+                maxHeight = height[left];
+                left++;
+                right--;
+            }
+            else if(height[left] < height[right]){
+                minHeight = height[left];
+                maxHeight = height[right];
+                left++;
+            }
+            else {
+                minHeight = height[right];
+                maxHeight = height[left];
+                right--;
+            }
+
+            currArea = (right-left)*minHeight;
+
+            if(currArea > maxArea)
+                maxArea = currArea;
+        }
+
+        return maxArea;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
