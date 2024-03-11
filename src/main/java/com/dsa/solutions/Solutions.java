@@ -1791,7 +1791,6 @@ public class Solutions {
             return maxArea;
 
         int currArea = 0;
-        int maxHeight = 0;
         int minHeight = 0;
         int left = 0;
         int right = height.length-1;
@@ -1800,22 +1799,20 @@ public class Solutions {
 
             if(height[left] == height[right]){
                 minHeight = height[left];
-                maxHeight = height[left];
+                currArea = (right-left)*minHeight;
                 left++;
                 right--;
             }
             else if(height[left] < height[right]){
                 minHeight = height[left];
-                maxHeight = height[right];
+                currArea = (right-left)*minHeight;
                 left++;
             }
             else {
                 minHeight = height[right];
-                maxHeight = height[left];
+                currArea = (right-left)*minHeight;
                 right--;
             }
-
-            currArea = (right-left)*minHeight;
 
             if(currArea > maxArea)
                 maxArea = currArea;
