@@ -1874,6 +1874,43 @@ public class Solutions {
         return false;
     }
 
+    //162. Find Peak Element
+    public int findPeakElement(int[] nums) {
+        //edge case
+        if(nums == null || nums.length == 0 || nums.length == 1)
+            return 0;
+        if(nums.length == 2){
+            if(nums[1]>nums[0])
+                return 1;
+            else return 0;
+        }
+        return findMid(nums, 0, nums.length-1);
+    }
+
+    private int findMid(int[] nums, int l, int r){
+
+        //base case
+        if(l>r){
+            return -1;
+        }
+        int mid = l + (r-l)/2;
+        if(mid+1<nums.length && mid-1>=0 && nums[mid]>nums[mid+1] && nums[mid]>nums[mid-1]){
+            return mid;
+        }
+        if(mid-1<0 && nums[mid]>nums[mid+1]){
+            return mid;
+        }
+        if(mid+1>nums.length-1 && nums[mid]>nums[mid-1]){
+            return mid;
+        }
+
+        int left = findMid(nums, l, mid-1);
+        if(left >= 0)
+            return left;
+        int right = findMid(nums, mid+1, r);
+        return right;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
