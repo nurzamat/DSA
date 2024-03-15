@@ -1921,15 +1921,8 @@ public class Solutions {
         if(nums.length == 1 && nums[0] != target){
             return -1;
         }
-        if(nums.length == 2){
-            if(nums[0] == target)
-                return 0;
-            if(nums[1] == target)
-                return 1;
-            return -1;
-        }
 
-
+        //base case
         int l=0;
         int r=nums.length-1;
         int mid = 0;
@@ -1940,7 +1933,7 @@ public class Solutions {
                 return mid;
             }
 
-            if(nums[mid]>nums[l]){
+            if(nums[mid]>=nums[l]){
                 if(nums[mid]>target){
                     if(nums[l]<=target)
                         r = mid - 1;
