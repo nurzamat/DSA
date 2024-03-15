@@ -1984,13 +1984,13 @@ public class Solutions {
             m = l + (r-l)/2;
             if(nums[m] == target){
                 //define first position
-                if(nums[m] == nums[m-1]){
+                if(m>0 && nums[m] == nums[m-1]){
                     result[0] = searchFirstPosition(nums, target, l, m-1);
                 }
                 else result[0] = m;
 
                 //define last position
-                if(nums[m] == nums[m+1]){
+                if(m<nums.length-1 && nums[m] == nums[m+1]){
                     result[1] = searchLastPosition(nums, target, m+1, r);
                 }
                 else result[1] = m;
@@ -2013,7 +2013,7 @@ public class Solutions {
         while(l<=r){
             m = l + (r-l)/2;
             if(nums[m] == target){
-                if(nums[m] == nums[m-1]){
+                if(m>0 && nums[m] == nums[m-1]){
                     return searchFirstPosition(nums, target, l, m-1);
                 }
                 else return m;
@@ -2034,7 +2034,7 @@ public class Solutions {
         while(l<=r){
             m = l + (r-l)/2;
             if(nums[m] == target){
-                if(nums[m] == nums[m+1]){
+                if(m<nums.length-1 && nums[m] == nums[m+1]){
                     return searchLastPosition(nums, target, m+1, r);
                 }
                 else return m;
@@ -2050,7 +2050,6 @@ public class Solutions {
 
         return -1;
     }
-
 
     class Node {
         public int val;
