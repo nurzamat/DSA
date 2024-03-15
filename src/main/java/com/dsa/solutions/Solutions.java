@@ -1961,6 +1961,97 @@ public class Solutions {
         return -1;
     }
 
+    //34. Find First and Last Position of Element in Sorted Array
+    public int[] searchRange(int[] nums, int target) {
+
+        int[] result = {-1, -1};
+        //edge case
+        if(nums.length == 1){
+            if(nums[0] == target)
+            {
+                result[0] = 0;
+                result[1] = 0;
+            }
+            return result;
+        }
+
+        //base case
+        int l = 0;
+        int r = nums.length-1;
+        int m = 0;
+
+        while(l<=r){
+            m = l + (r-l)/2;
+            if(nums[m] == target){
+                //define first position
+                if(nums[m] == nums[m-1]){
+                    result[0] = searchFirstPosition(nums, target, l, m-1);
+                }
+                else result[0] = m;
+
+                //define last position
+                if(nums[m] == nums[m+1]){
+                    result[1] = searchLastPosition(nums, target, m+1, r);
+                }
+                else result[1] = m;
+
+                return result;
+            }
+            if(nums[m] < target){
+                l = m + 1;
+            }
+            else {
+                r = m - 1;
+            }
+        }
+
+        return result;
+    }
+
+    private int searchFirstPosition(int[] nums, int target, int l, int r){
+        int m = 0;
+        while(l<=r){
+            m = l + (r-l)/2;
+            if(nums[m] == target){
+                if(nums[m] == nums[m-1]){
+                    return searchFirstPosition(nums, target, l, m-1);
+                }
+                else return m;
+            }
+            if(nums[m] < target){
+                l = m + 1;
+            }
+            else {
+                r = m - 1;
+            }
+        }
+
+        return -1;
+    }
+
+    private int searchLastPosition(int[] nums, int target, int l, int r){
+        int m = 0;
+        while(l<=r){
+            m = l + (r-l)/2;
+            if(nums[m] == target){
+                if(nums[m] == nums[m+1]){
+                    return searchLastPosition(nums, target, m+1, r);
+                }
+                else return m;
+            }
+
+            if(nums[m] < target){
+                l = m + 1;
+            }
+            else {
+                r = m - 1;
+            }
+        }
+
+        return -1;
+    }
+
+
     class Node {
         public int val;
         public List<Node> neighbors;
