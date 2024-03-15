@@ -1914,6 +1914,22 @@ public class Solutions {
     //33. Search in Rotated Sorted Array
     public int search(int[] nums, int target) {
 
+        //edge case
+        if(nums == null || nums.length == 0){
+            return -1;
+        }
+        if(nums.length == 1 && nums[0] != target){
+            return -1;
+        }
+        if(nums.length == 2){
+            if(nums[0] == target)
+                return 0;
+            if(nums[1] == target)
+                return 1;
+            return -1;
+        }
+
+
         int l=0;
         int r=nums.length-1;
         int mid = 0;
@@ -1923,18 +1939,21 @@ public class Solutions {
             if(nums[mid] == target){
                 return mid;
             }
-            if(nums[mid]<target){
-                if(nums[r]>=target)
-                    l = mid + 1;
-                else{
-                    r = mid - 1;
-                }
+
+            if(nums[mid]>nums[l]){
+                if(nums[mid]>target){
+                    if(nums[l]<=target)
+                        r = mid - 1;
+                    else l = mid + 1;
+                }else l = mid + 1;
             }
-            else{
-                if(nums[l]<=target)
+            else {
+                if(nums[mid]>target){
                     r = mid - 1;
-                else{
-                    l = mid + 1;
+                }else {
+                    if(nums[r]>=target)
+                        l =  mid + 1;
+                    else r = mid - 1;
                 }
             }
         }
