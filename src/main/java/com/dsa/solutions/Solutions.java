@@ -2044,6 +2044,42 @@ public class Solutions {
         return -1;
     }
 
+    //153. Find Minimum in Rotated Sorted Array
+    public int findMin(int[] nums) {
+
+        //edge case
+        if(nums.length == 1)
+            return nums[0];
+        if(nums.length == 2){
+            if(nums[0]>=nums[1])
+                return nums[1];
+            else return nums[0];
+        }
+
+        //base case
+        int mid = 0;
+        int l = 0;
+        int r = nums.length - 1;
+
+        if(nums[r]>nums[l])
+            return nums[l];
+
+        while(l<=r){
+            mid = l + (r - l)/2;
+            if(mid>=1 && nums[mid]<nums[mid-1]){
+                return nums[mid];
+            }
+            if(nums[mid]>=nums[0]){
+                l = mid + 1;
+            }
+            else {
+                r = mid - 1;
+            }
+        }
+
+        return nums[mid];
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
