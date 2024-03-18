@@ -2080,6 +2080,19 @@ public class Solutions {
         return nums[mid];
     }
 
+    //4. Median of Two Sorted Arrays
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+        int length = nums1.length + nums2.length;
+
+        int meridian = length/2;
+
+        double result = 0.0;
+
+
+
+        return result;
+    }
     class Node {
         public int val;
         public List<Node> neighbors;
