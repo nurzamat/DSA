@@ -2083,13 +2083,39 @@ public class Solutions {
     //4. Median of Two Sorted Arrays
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
-        int length = nums1.length + nums2.length;
+        int m = nums1.length;
+        int n = nums2.length;
 
-        int meridian = length/2;
+        int meridian = (m+n)/2;
 
         double result = 0.0;
 
+        int l1 = -1;
+        int r1 = -1;
+        int l2 = -1;
+        int r2 = -1;
 
+        //check right edges
+        if(nums1[m-1] < nums2[n-1]){
+            r1 = m - 1;
+            //find r2
+
+
+        }else {
+            r2 = n - 1;
+            //find r1
+        }
+
+        //check left edges
+        if(nums1[0] < nums2[0]){
+            l2 = 0;
+            //find l1
+
+        }else {
+            l1 = 0;
+            //find l2
+
+        }
 
         return result;
     }
