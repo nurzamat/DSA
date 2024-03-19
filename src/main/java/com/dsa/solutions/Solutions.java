@@ -2099,26 +2099,48 @@ public class Solutions {
         if(nums1[m-1] < nums2[n-1]){
             r1 = m - 1;
             //find r2
-
-
+            r2 = getEdgePosition(nums2, nums1[r1], true);
         }else {
             r2 = n - 1;
             //find r1
+            r1 = getEdgePosition(nums1, nums2[r2], true);
         }
 
         //check left edges
         if(nums1[0] < nums2[0]){
             l2 = 0;
             //find l1
-
+            l1 = getEdgePosition(nums1, nums2[l2], false);
         }else {
             l1 = 0;
             //find l2
-
+            l2 = getEdgePosition(nums2, nums1[l1], false);
         }
 
         return result;
     }
+
+    private int getEdgePosition(int[] nums, int target, boolean isRight){
+        int l = 0;
+        int r = nums.length - 1;
+        int mid = 0;
+
+        while(l<=r){
+          mid = l + (r-1)/2;
+          if(nums[mid] == target){
+              return mid;
+          }
+          if(nums[mid] < target){
+              l = mid+1;
+          }
+          else {
+              r = mid-1;
+          }
+        }
+
+        return isRight?l-1:l;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
