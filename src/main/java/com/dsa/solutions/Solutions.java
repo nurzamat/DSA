@@ -2141,6 +2141,47 @@ public class Solutions {
         return isRight?l-1:l;
     }
 
+    //Merge two sorted arrays
+    public int[] mergeArrays(int[] arr1, int[] arr2){
+        int m = arr1.length;
+        int n = arr2.length;
+        int[] arr = new int[m+n];
+        int ptr1 = 0;
+        int ptr2 = 0;
+        int i = -1;
+
+        while(ptr1<=m-1 || ptr2<=n-1){
+            i++;
+            if(ptr1>m-1){
+                arr[i] = arr2[ptr2];
+                ptr2++;
+                continue;
+            }
+
+            if(ptr2>n-1){
+                arr[i] = arr1[ptr1];
+                ptr1++;
+                continue;
+            }
+
+            if(arr1[ptr1] == arr2[ptr2]) {
+                arr[i] = arr1[ptr1];
+                i++;
+                arr[i] = arr1[ptr1];
+                ptr1++;
+                ptr2++;
+            } else if(arr1[ptr1] < arr2[ptr2]) {
+                arr[i] = arr1[ptr1];
+                ptr1++;
+            }
+            else {
+                arr[i] = arr2[ptr2];
+                ptr2++;
+            }
+        }
+        return arr;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
