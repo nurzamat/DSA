@@ -2182,6 +2182,95 @@ public class Solutions {
         return arr;
     }
 
+    //find value in merged two arrays by position
+    public int findValueInMergedArr(int[] arr1, int[] arr2, int position){
+        int m = arr1.length;
+        int n = arr2.length;
+        int mid = (m+n)/2;
+
+        int ptr1 = 0;
+        int ptr2 = 0;
+        int i = -1;
+
+        if(position<=mid){
+            while(ptr1<=m-1 || ptr2<=n-1){
+                i++;
+                if(ptr1>m-1){
+                    if(i==position)
+                        return arr2[ptr2];
+                    ptr2++;
+                    continue;
+                }
+
+                if(ptr2>n-1){
+                    if(i==position)
+                        return arr1[ptr1];
+                    ptr1++;
+                    continue;
+                }
+
+                if(arr1[ptr1] == arr2[ptr2]) {
+                    if(i==position || i+1==position)
+                        return arr1[ptr1];
+                    i++;
+                    ptr1++;
+                    ptr2++;
+                } else if(arr1[ptr1] < arr2[ptr2]) {
+                    if(i==position)
+                        return arr1[ptr1];
+                    ptr1++;
+                }
+                else {
+                    if(i==position)
+                        return arr2[ptr2];
+                    ptr2++;
+                }
+            }
+        }
+        else {
+            i=0;
+            ptr1 = m-1;
+            ptr2 = n-1;
+
+            while(ptr1>=0 || ptr2>=0){
+                i=i+1;
+                if(ptr1>m-1){
+                    if(i==position)
+                        return arr2[ptr2];
+                    ptr2++;
+                    continue;
+                }
+
+                if(ptr2>n-1){
+                    if(i==position)
+                        return arr1[ptr1];
+                    ptr1++;
+                    continue;
+                }
+
+                if(arr1[ptr1] == arr2[ptr2]) {
+                    if(m+n-i==position || m+n-i-1==position)
+                        return arr1[ptr1];
+                    i++;
+                    ptr1--;
+                    ptr2--;
+                } else if(arr1[ptr1] < arr2[ptr2]) {
+                    if(m+n-i==position)
+                        return arr2[ptr2];
+                    ptr2--;
+                }
+                else {
+                    if(m+n-i==position)
+                        return arr1[ptr1];
+                    ptr1--;
+                }
+            }
+
+        }
+
+        return -1;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
