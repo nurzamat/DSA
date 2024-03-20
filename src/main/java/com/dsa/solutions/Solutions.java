@@ -2086,7 +2086,7 @@ public class Solutions {
         int m = nums1.length;
         int n = nums2.length;
 
-        int meridian = (m+n)/2;
+        int mer = (m+n)/2;
 
         double result = 0.0;
 
@@ -2095,26 +2095,56 @@ public class Solutions {
         int l2 = -1;
         int r2 = -1;
 
-        //check right edges
-        if(nums1[m-1] < nums2[n-1]){
-            r1 = m - 1;
-            //find r2
-            r2 = getEdgePosition(nums2, nums1[r1], true);
-        }else {
-            r2 = n - 1;
-            //find r1
-            r1 = getEdgePosition(nums1, nums2[r2], true);
-        }
-
+        int d1 = 0;
+        int d2 = 0;
+        int d3 = 0;
         //check left edges
         if(nums1[0] < nums2[0]){
             l2 = 0;
             //find l1
             l1 = getEdgePosition(nums1, nums2[l2], false);
+            //meridian in left
+            if(mer<l1)
+                return nums1[mer];
         }else {
             l1 = 0;
             //find l2
             l2 = getEdgePosition(nums2, nums1[l1], false);
+            //meridian in left
+            if(mer<l2)
+                return nums2[mer];
+        }
+
+        d1 = Math.max(l1, l2);
+
+        //check right edges
+        if(nums1[m-1] < nums2[n-1]){
+            r1 = m - 1;
+            //find r2
+            r2 = getEdgePosition(nums2, nums1[r1], true);
+
+            d2 = (r1-l1) + (r2-l2);
+            //meridian in right
+            if(d1+d2<mer){
+                 int diff = mer-d1-d2;
+                 return nums2[r2+diff];
+            }
+            //meridian in intersection
+
+
+        }else {
+            r2 = n - 1;
+            //find r1
+            r1 = getEdgePosition(nums1, nums2[r2], true);
+
+            d2 = (r1-l1) + (r2-l2);
+            //meridian in right
+            if(d1+d2<mer){
+                int diff = mer-d1-d2;
+                return nums1[r1+diff];
+            }
+            //meridian in intersection
+
         }
 
         return result;
