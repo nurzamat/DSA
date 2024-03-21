@@ -2213,6 +2213,95 @@ public class Solutions {
     }
 
     //find value in merged two arrays by position
+    public int findValueInMergedArr(int[] arr1, int l1, int r1, int[] arr2, int l2, int r2, int position){
+        int m = r1 - l1;
+        int n = r2 - l2;
+        int mid = (m+n)/2;
+
+        int ptr1 = l1;
+        int ptr2 = l2;
+        int i = -1;
+
+        if(position<=mid){
+            while(ptr1<=r1 || ptr2<=r2){
+                i++;
+                if(ptr1>r1){
+                    if(i==position)
+                        return arr2[ptr2];
+                    ptr2++;
+                    continue;
+                }
+
+                if(ptr2>r2){
+                    if(i==position)
+                        return arr1[ptr1];
+                    ptr1++;
+                    continue;
+                }
+
+                if(arr1[ptr1] == arr2[ptr2]) {
+                    if(i==position || i+1==position)
+                        return arr1[ptr1];
+                    i++;
+                    ptr1++;
+                    ptr2++;
+                } else if(arr1[ptr1] < arr2[ptr2]) {
+                    if(i==position)
+                        return arr1[ptr1];
+                    ptr1++;
+                }
+                else {
+                    if(i==position)
+                        return arr2[ptr2];
+                    ptr2++;
+                }
+            }
+        }
+        else {
+            i=0;
+            ptr1 = r1;
+            ptr2 = r2;
+
+            while(ptr1>=0 || ptr2>=0){
+                i=i+1;
+                if(ptr1<0){
+                    if(i==position)
+                        return arr2[ptr2];
+                    ptr2--;
+                    continue;
+                }
+
+                if(ptr2<0){
+                    if(i==position)
+                        return arr1[ptr1];
+                    ptr1--;
+                    continue;
+                }
+
+                if(arr1[ptr1] == arr2[ptr2]) {
+                    if(m+n-i==position || m+n-i-1==position)
+                        return arr1[ptr1];
+                    i++;
+                    ptr1--;
+                    ptr2--;
+                } else if(arr1[ptr1] < arr2[ptr2]) {
+                    if(m+n-i==position)
+                        return arr2[ptr2];
+                    ptr2--;
+                }
+                else {
+                    if(m+n-i==position)
+                        return arr1[ptr1];
+                    ptr1--;
+                }
+            }
+
+        }
+
+        return -1;
+    }
+
+    //find value in merged two arrays by position
     public int findValueInMergedArr(int[] arr1, int[] arr2, int position){
         int m = arr1.length;
         int n = arr2.length;
@@ -2264,17 +2353,17 @@ public class Solutions {
 
             while(ptr1>=0 || ptr2>=0){
                 i=i+1;
-                if(ptr1>m-1){
+                if(ptr1<0){
                     if(i==position)
                         return arr2[ptr2];
-                    ptr2++;
+                    ptr2--;
                     continue;
                 }
 
-                if(ptr2>n-1){
+                if(ptr2<0){
                     if(i==position)
                         return arr1[ptr1];
-                    ptr1++;
+                    ptr1--;
                     continue;
                 }
 
