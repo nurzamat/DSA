@@ -2098,6 +2098,7 @@ public class Solutions {
         int d1 = 0;
         int d2 = 0;
         int d3 = 0;
+
         //check left edges
         if(nums1[0] < nums2[0]){
             l2 = 0;
@@ -2126,11 +2127,11 @@ public class Solutions {
             d2 = (r1-l1) + (r2-l2);
             //meridian in right
             if(d1+d2<mer){
-                 int diff = mer-d1-d2;
-                 return nums2[r2+diff];
+                int diff = mer-d1-d2;
+                return nums2[r2+diff];
             }
             //meridian in intersection
-
+            int position = mer - d1;
 
         }else {
             r2 = n - 1;
