@@ -2117,7 +2117,7 @@ public class Solutions {
         }
 
         d1 = Math.max(l1, l2);
-
+        int position = mer - d1;
         //check right edges
         if(nums1[m-1] < nums2[n-1]){
             r1 = m - 1;
@@ -2130,9 +2130,6 @@ public class Solutions {
                 int diff = mer-d1-d2;
                 return nums2[r2+diff];
             }
-            //meridian in intersection
-            int position = mer - d1;
-
         }else {
             r2 = n - 1;
             //find r1
@@ -2144,9 +2141,9 @@ public class Solutions {
                 int diff = mer-d1-d2;
                 return nums1[r1+diff];
             }
-            //meridian in intersection
-
         }
+        //meridian in intersection
+        result = findValueInMergedArr(nums1, l1, r1, nums2, l2, r2, position);
 
         return result;
     }
@@ -2259,12 +2256,12 @@ public class Solutions {
             }
         }
         else {
-            i=0;
+            i=m+n+2;
             ptr1 = r1;
             ptr2 = r2;
 
             while(ptr1>=0 || ptr2>=0){
-                i=i+1;
+                i--;
                 if(ptr1<0){
                     if(i==position)
                         return arr2[ptr2];
@@ -2280,23 +2277,22 @@ public class Solutions {
                 }
 
                 if(arr1[ptr1] == arr2[ptr2]) {
-                    if(m+n-i==position || m+n-i-1==position)
+                    if(i==position || i-1==position)
                         return arr1[ptr1];
-                    i++;
+                    i--;
                     ptr1--;
                     ptr2--;
                 } else if(arr1[ptr1] < arr2[ptr2]) {
-                    if(m+n-i==position)
+                    if(i==position)
                         return arr2[ptr2];
                     ptr2--;
                 }
                 else {
-                    if(m+n-i==position)
+                    if(i==position)
                         return arr1[ptr1];
                     ptr1--;
                 }
             }
-
         }
 
         return -1;
