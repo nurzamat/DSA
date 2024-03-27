@@ -33,7 +33,7 @@ class Trie {
             }
             curent = node;
         }
-        return curent.endOfString == true;
+        return curent.endOfString;
     }
 
     public boolean startsWith(String prefix) {
@@ -45,7 +45,7 @@ class Trie {
             }
             curent = node;
         }
-        return curent.endOfString == false;
+        return true;
     }
 
 
