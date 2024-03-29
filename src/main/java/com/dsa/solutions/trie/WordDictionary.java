@@ -27,15 +27,31 @@ class WordDictionary {
 
     public boolean search(String word) {
         TrieNode curent = root;
-        for (Character ch:word.toCharArray()) {
-
-            TrieNode node = curent.children.get(ch);
-            if(node == null){
-                return false;
+        for (int i=0; i<word.length(); i++) {
+            Character ch = word.charAt(i);
+            if(ch == '.'){
+                ch = word.charAt(i+1);
+                TrieNode node = null;
+                for (Map.Entry<Character, TrieNode> entry:curent.children.entrySet()) {
+                    node = entry.getValue().children.get(ch);
+                    if(node != null)
+                        break;
+                }
+                if(node == null){
+                    return false;
+                }
+                i = i + 1;
+                curent = node;
             }
-            curent = node;
+            else{
+                TrieNode node = curent.children.get(ch);
+                if(node == null){
+                    return false;
+                }
+                curent = node;
+            }
         }
-        return curent.endOfString;
+        return true;
     }
 
 
