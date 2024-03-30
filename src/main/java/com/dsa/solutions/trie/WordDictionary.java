@@ -1,59 +1,97 @@
 package com.dsa.solutions.trie;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //211. Design Add and Search Words Data Structure
 class WordDictionary {
-
-    private TrieNode root;
+    TrieNode root;
 
     public WordDictionary() {
         root = new TrieNode();
     }
 
     public void addWord(String word) {
-        TrieNode curent = root;
-        for (Character ch:word.toCharArray()) {
-            TrieNode node = curent.children.get(ch);
+        TrieNode current = root;
+        Character ch;
+        for(int i=0; i<word.length(); i++){
+            ch = word.charAt(i);
+            TrieNode node = current.children.get(ch);
             if(node == null){
                 node = new TrieNode();
-                curent.children.put(ch, node);
+                current.children.put(ch, node);
             }
-            curent = node;
+            current = node;
         }
-        curent.endOfString = true;
+        current.endOfString = true;
     }
 
     public boolean search(String word) {
-        TrieNode curent = root;
-        for (int i=0; i<word.length(); i++) {
-            Character ch = word.charAt(i);
+        TrieNode current = root;
+        Character ch;
+        TrieNode node = null;
+        List<TrieNode> list = null;
+        for(int i=0; i<word.length(); i++){
+            ch = word.charAt(i);
             if(ch == '.'){
-                ch = word.charAt(i+1);
-                TrieNode node = null;
-                for (Map.Entry<Character, TrieNode> entry:curent.children.entrySet()) {
-                    node = entry.getValue().children.get(ch);
-                    if(node != null)
-                        break;
+                if(list != null){
+                    List<TrieNode> subList = new ArrayList();
+                    for(TrieNode trNode:list){
+                        for(Map.Entry<Character, TrieNode> entry: trNode.children.entrySet()){
+                            subList.add(entry.getValue());
+                        }
+                    }
+                    list = subList;
                 }
-                if(node == null){
-                    return false;
+                else{
+                    list = new ArrayList();
+                    for(Map.Entry<Character, TrieNode> entry: current.children.entrySet()){
+                        list.add(entry.getValue());
+                    }
+                    current = null;
                 }
-                i = i + 1;
-                curent = node;
             }
             else{
-                TrieNode node = curent.children.get(ch);
-                if(node == null){
-                    return false;
+                if(list != null){
+                    for(TrieNode trNode:list){
+                        node = trNode.children.get(ch);
+                        if(node != null){
+                            break;
+                        }
+                    }
+                    if(node == null)
+                        return false;
+                    current = node;
+                    list = null;
                 }
-                curent = node;
+                else{
+                    node = current.children.get(ch);
+                    if(node == null){
+                        return false;
+                    }
+                    current = node;
+                    list = null;
+                }
             }
         }
+        if(current != null && !current.endOfString)
+            return false;
+
+        if(list != null){
+            boolean hasEnd = false;
+            for(TrieNode trNode:list){
+                if(trNode.endOfString){
+                    hasEnd = true;
+                    break;
+                }
+            }
+            return hasEnd;
+        }
+
         return true;
     }
-
 
     class TrieNode{
         Map<Character, TrieNode> children;
