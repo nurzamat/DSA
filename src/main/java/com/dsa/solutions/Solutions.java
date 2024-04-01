@@ -2387,6 +2387,27 @@ public class Solutions {
         return -1;
     }
 
+    //9. Palindrome Number
+    public boolean isPalindrome(int x) {
+        String s = x+"";
+        if(s == null || s.trim() == "")
+            return true;
+
+        int left = 0;
+        int right = s.length()-1;
+
+        while(left < right){
+            if(s.charAt(left) != s.charAt(right)){
+                return false;
+            }else{
+                left++;
+                right--;
+            }
+        }
+
+        return true;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
