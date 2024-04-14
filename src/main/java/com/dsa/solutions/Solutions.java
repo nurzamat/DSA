@@ -2408,6 +2408,20 @@ public class Solutions {
         return true;
     }
 
+
+    //215. Kth Largest Element in an Array
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(Collections.reverseOrder());
+        for(int val: nums){
+            maxHeap.add(val);
+        }
+        int result = 0;
+        for(int i=0; i<k; i++){
+            result = maxHeap.poll();
+        }
+        return result;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
