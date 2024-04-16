@@ -2478,6 +2478,42 @@ public class Solutions {
         nums[j] = temp;
     }
 
+    //373. Find K Pairs with Smallest Sums
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        int ptr1 = 0;
+        int ptr2 = 0;
+
+        List<List<Integer>> result = new ArrayList();
+        while(ptr1<nums1.length || ptr2<nums2.length){
+            List<Integer> list = new ArrayList();
+            list.add(nums1[ptr1]);
+            list.add(nums2[ptr2]);
+            result.add(list);
+
+            if(result.size() == k){
+                return result;
+            }
+
+            if((nums1[ptr1+1]+nums2[ptr2])<=(nums1[ptr1]+nums2[ptr2+1]))
+                ptr1++;
+            else ptr2++;
+
+            if(ptr1 == nums1.length)
+            {
+                ptr1 = 0;
+                ptr2++;
+            }
+
+            if(ptr2 == nums2.length)
+            {
+                ptr2 = 0;
+                ptr1++;
+            }
+        }
+
+        return result;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
