@@ -3,6 +3,7 @@ package com.dsa.solutions;
 import com.dsa.solutions.tree.TreeNode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solutions {
     //soltion O(n)
@@ -2518,6 +2519,41 @@ public class Solutions {
         }
 
         return result;
+    }
+
+    //373. Find K Pairs with Smallest Sums
+    public List<List<Integer>> kSmallestPairs2(int[] nums1, int[] nums2, int k) {
+
+        List<List<Integer>> allPairs = new ArrayList();
+
+        for(int i=0; i < nums1.length; i++){
+            for(int j=0; j < nums2.length; j++){
+                List<Integer> list = new ArrayList();
+                list.add(nums1[i]);
+                list.add(nums2[j]);
+                allPairs.add(list);
+            }
+        }
+
+        //selection sort
+        for(int i=0; i<allPairs.size(); i++){
+            int minIndex = i;
+
+            for(int j=i+1; j < allPairs.size(); j++){
+                if(getSum(allPairs.get(j))<getSum(allPairs.get(minIndex))){
+                    minIndex = j;
+                }
+            }
+            List<Integer> tempList = allPairs.get(i);
+            allPairs.set(i, allPairs.get(minIndex));
+            allPairs.set(minIndex, tempList);
+        }
+        List<List<Integer>> firstKElements = allPairs.stream().limit(k).collect(Collectors.toList());
+        return firstKElements;
+    }
+
+    private Integer getSum(List<Integer> list){
+        return list.get(0) + list.get(1);
     }
 
     class Node {
