@@ -2536,7 +2536,7 @@ public class Solutions {
         }
 
         //selection sort
-        for(int i=0; i<allPairs.size(); i++){
+        for(int i=0; i<k; i++){
             int minIndex = i;
 
             for(int j=i+1; j < allPairs.size(); j++){
