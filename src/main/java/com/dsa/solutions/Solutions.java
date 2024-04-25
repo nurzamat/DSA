@@ -3,6 +3,7 @@ package com.dsa.solutions;
 import com.dsa.solutions.tree.TreeNode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solutions {
     //soltion O(n)
@@ -2419,6 +2420,173 @@ public class Solutions {
         for(int i=0; i<k; i++){
             result = maxHeap.poll();
         }
+        return result;
+    }
+
+    //215. Kth Largest Element in an Array (Second solution)
+    // Function to find the kth largest element in the array
+    public int findKthLargest2(int[] nums, int k) {
+        int n = nums.length;
+        // Find the (n-k)th smallest element because the kth largest is also the (n-k)th smallest when sorted in ascending order
+        return quickSelect(nums, 0, n - 1, n - k);
+    }
+
+    // Helper function to perform quick select
+    private int quickSelect(int[] nums, int left, int right, int kSmallest) {
+        // When the left and right pointers meet, we've found the kSmallest element
+        if (left == right) {
+            return nums[left];
+        }
+
+        // Initialize two pointers for the partitioning step
+        int i = left - 1;
+        int j = right + 1;
+
+        // Choose pivot as the middle element
+        int pivot = nums[(left + right) >>> 1];
+
+        while (i < j) {
+            // Move i right past any elements less than the pivot
+            do {
+                i++;
+            } while (nums[i] < pivot);
+
+            // Move j left past any elements greater than the pivot
+            do {
+                j--;
+            } while (nums[j] > pivot);
+
+            // Swap elements at i and j if they are out of order with respect to the pivot
+            if (i < j) {
+                swap(nums, i, j);
+            }
+        }
+
+        // After partitioning, the pivot is now at index j
+        // If we found the kSmallest element, return it
+        if (j >= kSmallest) {
+            return quickSelect(nums, left, j, kSmallest);
+        }
+
+        // Otherwise, continue the search in the right partition
+        return quickSelect(nums, j + 1, right, kSmallest);
+    }
+
+    // Swap function to swap two elements in the array
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    //373. Find K Pairs with Smallest Sums (not optimal solution)
+    public List<List<Integer>> kSmallestPairs1(int[] nums1, int[] nums2, int k) {
+        int ptr1 = 0;
+        int ptr2 = 0;
+
+        List<List<Integer>> result = new ArrayList();
+        while(ptr1<nums1.length || ptr2<nums2.length){
+            List<Integer> list = new ArrayList();
+            list.add(nums1[ptr1]);
+            list.add(nums2[ptr2]);
+            result.add(list);
+
+            if(result.size() == k){
+                return result;
+            }
+
+            if(ptr1+1<nums1.length && ptr2+1<nums2.length){
+                if((nums1[ptr1+1]+nums2[ptr2])<=(nums1[ptr1]+nums2[ptr2+1]))
+                    ptr1++;
+                else ptr2++;
+            } else if(ptr1+1<nums1.length){
+                ptr1++;
+            } else {
+                ptr2++;
+            }
+
+            if(ptr1 == nums1.length)
+            {
+                ptr1 = 0;
+                ptr2++;
+            }
+
+            if(ptr2 == nums2.length)
+            {
+                ptr2 = 0;
+                ptr1++;
+            }
+        }
+
+        return result;
+    }
+
+    //373. Find K Pairs with Smallest Sums (not optimal solution)
+    public List<List<Integer>> kSmallestPairs2(int[] nums1, int[] nums2, int k) {
+
+        List<List<Integer>> allPairs = new ArrayList();
+
+        for(int i=0; i < nums1.length; i++){
+            for(int j=0; j < nums2.length; j++){
+                List<Integer> list = new ArrayList();
+                list.add(nums1[i]);
+                list.add(nums2[j]);
+                allPairs.add(list);
+            }
+        }
+
+        //selection sort
+        for(int i=0; i<k; i++){
+            int minIndex = i;
+
+            for(int j=i+1; j < allPairs.size(); j++){
+                if(getSum(allPairs.get(j))<getSum(allPairs.get(minIndex))){
+                    minIndex = j;
+                }
+            }
+            List<Integer> tempList = allPairs.get(i);
+            allPairs.set(i, allPairs.get(minIndex));
+            allPairs.set(minIndex, tempList);
+        }
+        List<List<Integer>> firstKElements = allPairs.stream().limit(k).collect(Collectors.toList());
+        return firstKElements;
+    }
+
+    private Integer getSum(List<Integer> list){
+        return list.get(0) + list.get(1);
+    }
+
+    //373. Find K Pairs with Smallest Sums
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        // Create a priority queue to hold the arrays with a comparator to prioritize by the sum of pairs.
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+
+        // Initialize the priority queue with the first k pairs from nums1 and the first element from nums2.
+        for (int i = 0; i < Math.min(nums1.length, k); ++i) {
+            queue.offer(new int[] {nums1[i] + nums2[0], i, 0});
+        }
+
+        // Prepare a list to store the k smallest pairs.
+        List<List<Integer>> result = new ArrayList<>();
+
+        // Keep polling from the priority queue to find the next smallest pair
+        while (!queue.isEmpty() && k > 0) {
+            // Poll the smallest sum pair from the priority queue.
+            int[] currentPair = queue.poll();
+
+            // Add the new pair [nums1[index1], nums2[index2]] to the result list.
+            result.add(Arrays.asList(nums1[currentPair[1]], nums2[currentPair[2]]));
+
+            // Decrease the remaining pairs count.
+            --k;
+
+            // If there's a next element in nums2, offer the next pair from nums1 and nums2 into the priority queue.
+            if (currentPair[2] + 1 < nums2.length) {
+                queue.offer(new int[] {nums1[currentPair[1]] + nums2[currentPair[2] + 1], currentPair[1], currentPair[2] + 1});
+            }
+        }
+
+        // Return the list of k smallest pairs.
         return result;
     }
 
