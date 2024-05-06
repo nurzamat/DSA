@@ -2592,6 +2592,9 @@ public class Solutions {
 
     //205. Isomorphic Strings
     public boolean isIsomorphic(String s, String t) {
+        if(s == null || t == null){
+            return false;
+        }
         if(s.length() != t.length()){
             return false;
         }
