@@ -2612,18 +2612,23 @@ public class Solutions {
         return true;
     }
 
+    //290. Word Pattern
     public boolean wordPattern(String pattern, String s) {
 
         String[] arr = s.split(" ");
         if(arr.length != pattern.length())
             return false;
-        Map<Character, String> map = new HashMap<>();
+        Map<Character, String> map1 = new HashMap<>();
+        Map<String, Character> map2 = new HashMap<>();
 
         for(int i=0; i<arr.length; i++){
-            if(!map.containsKey(pattern.charAt(i))){
-                map.put(pattern.charAt(i), arr[i]);
+            if(!map1.containsKey(pattern.charAt(i))){
+                if(map2.containsKey(arr[i]))
+                    return false;
+                map1.put(pattern.charAt(i), arr[i]);
+                map2.put(arr[i], pattern.charAt(i));
             }
-            else if(!map.get(pattern.charAt(i)).equals(arr[i]))
+            else if(!map1.get(pattern.charAt(i)).equals(arr[i]))
                 return false;
         }
 
