@@ -2645,23 +2645,26 @@ public class Solutions {
         }
 
         Map<Character, Integer> map = new HashMap<>();
+        Character ch;
         for(int i=0; i<s.length(); i++){
-            if(!map.containsKey(s.charAt(i))){
-                map.put(s.charAt(i), 1);
+            ch = s.charAt(i);
+            if(!map.containsKey(ch)){
+                map.put(ch, 1);
             }
             else{
-                map.put(s.charAt(i), map.get(s.charAt(i)) + 1);
+                map.put(ch, map.get(ch) + 1);
             }
         }
 
         for(int i=0; i<t.length(); i++){
-            if(!map.containsKey(t.charAt(i))){
+            ch = t.charAt(i);
+            if(!map.containsKey(ch)){
                 return false;
             }
             else{
-                map.put(t.charAt(i), map.get(t.charAt(i)) - 1);
-                if(map.get(t.charAt(i)) == 0){
-                    map.remove(t.charAt(i));
+                map.put(ch, map.get(ch) - 1);
+                if(map.get(ch) == 0){
+                    map.remove(ch);
                 }
             }
         }
