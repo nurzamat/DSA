@@ -2672,6 +2672,34 @@ public class Solutions {
         return map.isEmpty();
     }
 
+    //202. Happy Number
+    public boolean isHappy(int n) {
+        // Initialize slow and fast pointers to detect cycle.
+        int slowRunner = n;
+        int fastRunner = getNext(n);
+
+        // Loop until the two pointers meet or we find a happy number.
+        while (slowRunner != fastRunner) {
+            slowRunner = getNext(slowRunner);       // Move slow pointer by one step.
+            fastRunner = getNext(getNext(fastRunner)); // Move fast pointer by two steps.
+        }
+
+        // If the slow runner reaches 1, then the number is happy.
+        // If the pointers meet and it's not at 1, then a cycle is detected and the number is not happy.
+        return slowRunner == 1;
+    }
+
+    // Helper method to calculate the next number in the sequence.
+    private int getNext(int number) {
+        int sumOfSquares = 0;
+        while (number > 0) {
+            int digit = number % 10;               // Extract the last digit of the current number.
+            sumOfSquares += digit * digit;         // Add the square of the extracted digit to the sum.
+            number /= 10;                          // Remove the last digit from the current number.
+        }
+        return sumOfSquares;
+    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
