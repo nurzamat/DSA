@@ -2834,6 +2834,27 @@ public class Solutions {
         return true;
     }
 
+    public int removeDuplicates2(int[] nums) {
+        if(nums == null || nums.length == 0)
+            return 0;
+        int cnt = 1;
+        boolean skip = false;
+        for(int i=0; i<nums.length-1; i++){
+            if(nums[i] == nums[i+1]){
+                if(!skip){
+                    cnt++;
+                    skip = true;
+                }
+            }
+            else{
+                cnt++;
+                skip = false;
+            }
+        }
+
+        return cnt;
+    }
+
     // Helper method to calculate the next number in the sequence.
     private int getNext(int number) {
         int sumOfSquares = 0;
