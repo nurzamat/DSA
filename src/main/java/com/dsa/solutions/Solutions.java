@@ -2839,16 +2839,19 @@ public class Solutions {
             return 0;
         int cnt = 1;
         boolean skip = false;
+        int j = 0;
         for(int i=0; i<nums.length-1; i++){
             if(nums[i] == nums[i+1]){
                 if(!skip){
                     cnt++;
                     skip = true;
+                    j = i+1;
                 }
             }
             else{
                 cnt++;
                 skip = false;
+                nums[j+1] = nums[i+1];
             }
         }
 
