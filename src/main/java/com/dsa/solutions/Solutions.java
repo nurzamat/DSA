@@ -2834,28 +2834,31 @@ public class Solutions {
         return true;
     }
 
+    //80. Remove Duplicates from Sorted Array II
     public int removeDuplicates2(int[] nums) {
         if(nums == null || nums.length == 0)
             return 0;
-        int cnt = 1;
-        boolean skip = false;
+
         int j = 0;
-        for(int i=0; i<nums.length-1; i++){
-            if(nums[i] == nums[i+1]){
-                if(!skip){
-                    cnt++;
-                    skip = true;
-                    j = i+1;
+        int current = nums[0];
+        int twoSize = 0;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i] == current){
+                if(twoSize < 2){
+                    twoSize++;
+                    nums[j] = current;
+                    j++;
                 }
             }
             else{
-                cnt++;
-                skip = false;
-                nums[j+1] = nums[i+1];
+                current = nums[i];
+                twoSize = 1;
+                nums[j] = current;
+                j = j + 1;
             }
         }
 
-        return cnt;
+        return j;
     }
 
     // Helper method to calculate the next number in the sequence.
