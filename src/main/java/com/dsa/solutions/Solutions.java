@@ -2873,15 +2873,53 @@ public class Solutions {
     }
 
     //189. Rotate Array
-    public void rotate(int[] nums, int k) {
-        for(int i=0; i<k; i++){
-            for(int j=(nums.length-k + i); j>i; j--){
-                int temp = nums[j];
-                nums[j] = nums[j-1];
-                nums[j-1] = temp;
-            }
-        }
-    }
+    private int[] nums;
+4
+5    /**
+6     * Rotates the given array to the right by k steps.
+7     * @param nums Array to be rotated.
+8     * @param k Number of steps to rotate the array to the right.
+9     */
+10    public void rotate(int[] nums, int k) {
+11        // Assign the input array to the class-level variable
+12        this.nums = nums;
+13
+14        // Number of elements in the array
+15        int n = nums.length;
+16
+17        // Normalize the number of steps k to avoid extra rotations
+18        k %= n;
+19
+20        // Reverse the entire array
+21        reverse(0, n - 1);
+22
+23        // Reverse the first part (up to k elements)
+24        reverse(0, k - 1);
+25
+26        // Reverse the second part (from k to the end of the array)
+27        reverse(k, n - 1);
+28    }
+29
+30    /**
+31     * Reverses elements in the array between indices i and j.
+32     * @param i Starting index for reversal.
+33     * @param j Ending index for reversal.
+34     */
+35    private void reverse(int i, int j) {
+36        // Using two pointers approach, swap elements until pointers meet or cross
+37        while (i < j) {
+38            // Temporary variable to hold a value during the swap
+39            int temp = nums[i];
+40
+41            // Perform swap
+42            nums[i] = nums[j];
+43            nums[j] = temp;
+44
+45            // Move pointers towards each other
+46            ++i;
+47            --j;
+48        }
+49    }
 
     class Node {
         public int val;
