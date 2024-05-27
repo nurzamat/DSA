@@ -2921,6 +2921,59 @@ public class Solutions {
 48        }
 49    }
 
+public int findKthLargest(int[] nums, int k) {
+4        int n = nums.length;
+5        // Find the (n-k)th smallest element because the kth largest is also the (n-k)th smallest when sorted in ascending order
+6        return quickSelect(nums, 0, n - 1, n - k);
+7    }
+8
+9    // Helper function to perform quick select
+10    private int quickSelect(int[] nums, int left, int right, int kSmallest) {
+11        // When the left and right pointers meet, we've found the kSmallest element
+12        if (left == right) {
+13            return nums[left];
+14        }
+15
+16        // Initialize two pointers for the partitioning step
+17        int i = left - 1;
+18        int j = right + 1;
+19        // Choose pivot as the middle element
+20        int pivot = nums[(left + right) >>> 1];
+21
+22        while (i < j) {
+23            // Move i right past any elements less than the pivot
+24            do {
+25                i++;
+26            } while (nums[i] < pivot);
+27
+28            // Move j left past any elements greater than the pivot
+29            do {
+30                j--;
+31            } while (nums[j] > pivot);
+32
+33            // Swap elements at i and j if they are out of order with respect to the pivot
+34            if (i < j) {
+35                swap(nums, i, j);
+36            }
+37        }
+38
+39        // After partitioning, the pivot is now at index j
+40        // If we found the kSmallest element, return it
+41        if (j >= kSmallest) {
+42            return quickSelect(nums, left, j, kSmallest);
+43        }
+44
+45        // Otherwise, continue the search in the right partition
+46        return quickSelect(nums, j + 1, right, kSmallest);
+47    }
+48
+49    // Swap function to swap two elements in the array
+50    private void swap(int[] nums, int i, int j) {
+51        int temp = nums[i];
+52        nums[i] = nums[j];
+53        nums[j] = temp;
+54    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
