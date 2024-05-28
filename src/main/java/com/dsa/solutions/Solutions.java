@@ -2874,105 +2874,130 @@ public class Solutions {
 
     //189. Rotate Array
     private int[] nums;
-4
-5    /**
-6     * Rotates the given array to the right by k steps.
-7     * @param nums Array to be rotated.
-8     * @param k Number of steps to rotate the array to the right.
-9     */
-10    public void rotate(int[] nums, int k) {
-11        // Assign the input array to the class-level variable
-12        this.nums = nums;
-13
-14        // Number of elements in the array
-15        int n = nums.length;
-16
-17        // Normalize the number of steps k to avoid extra rotations
-18        k %= n;
-19
-20        // Reverse the entire array
-21        reverse(0, n - 1);
-22
-23        // Reverse the first part (up to k elements)
-24        reverse(0, k - 1);
-25
-26        // Reverse the second part (from k to the end of the array)
-27        reverse(k, n - 1);
-28    }
-29
-30    /**
-31     * Reverses elements in the array between indices i and j.
-32     * @param i Starting index for reversal.
-33     * @param j Ending index for reversal.
-34     */
-35    private void reverse(int i, int j) {
-36        // Using two pointers approach, swap elements until pointers meet or cross
-37        while (i < j) {
-38            // Temporary variable to hold a value during the swap
-39            int temp = nums[i];
-40
-41            // Perform swap
-42            nums[i] = nums[j];
-43            nums[j] = temp;
-44
-45            // Move pointers towards each other
-46            ++i;
-47            --j;
-48        }
-49    }
+
+   /**
+    * Rotates the given array to the right by k steps.
+    * @param nums Array to be rotated.
+    * @param k Number of steps to rotate the array to the right.
+    */
+    public void rotate(int[] nums, int k) {
+        // Assign the input array to the class-level variable
+        this.nums = nums;
+
+        // Number of elements in the array
+        int n = nums.length;
+
+        // Normalize the number of steps k to avoid extra rotations
+        k %= n;
+
+        // Reverse the entire array
+        reverse(0, n - 1);
+
+        // Reverse the first part (up to k elements)
+        reverse(0, k - 1);
+
+        // Reverse the second part (from k to the end of the array)
+        reverse(k, n - 1);
+    }
+
+    /**
+     * Reverses elements in the array between indices i and j.
+     * @param i Starting index for reversal.
+     * @param j Ending index for reversal.
+     */
+    private void reverse(int i, int j) {
+        // Using two pointers approach, swap elements until pointers meet or cross
+        while (i < j) {
+            // Temporary variable to hold a value during the swap
+            int temp = nums[i];
+
+            // Perform swap
+            nums[i] = nums[j];
+            nums[j] = temp;
+
+            // Move pointers towards each other
+            ++i;
+            --j;
+        }
+    }
 
 public int findKthLargest(int[] nums, int k) {
-4        int n = nums.length;
-5        // Find the (n-k)th smallest element because the kth largest is also the (n-k)th smallest when sorted in ascending order
-6        return quickSelect(nums, 0, n - 1, n - k);
-7    }
-8
-9    // Helper function to perform quick select
-10    private int quickSelect(int[] nums, int left, int right, int kSmallest) {
-11        // When the left and right pointers meet, we've found the kSmallest element
-12        if (left == right) {
-13            return nums[left];
-14        }
-15
-16        // Initialize two pointers for the partitioning step
-17        int i = left - 1;
-18        int j = right + 1;
-19        // Choose pivot as the middle element
-20        int pivot = nums[(left + right) >>> 1];
-21
-22        while (i < j) {
-23            // Move i right past any elements less than the pivot
-24            do {
-25                i++;
-26            } while (nums[i] < pivot);
-27
-28            // Move j left past any elements greater than the pivot
-29            do {
-30                j--;
-31            } while (nums[j] > pivot);
-32
-33            // Swap elements at i and j if they are out of order with respect to the pivot
-34            if (i < j) {
-35                swap(nums, i, j);
-36            }
-37        }
-38
-39        // After partitioning, the pivot is now at index j
-40        // If we found the kSmallest element, return it
-41        if (j >= kSmallest) {
-42            return quickSelect(nums, left, j, kSmallest);
-43        }
-44
-45        // Otherwise, continue the search in the right partition
-46        return quickSelect(nums, j + 1, right, kSmallest);
-47    }
-48
-49    // Swap function to swap two elements in the array
-50    private void swap(int[] nums, int i, int j) {
-51        int temp = nums[i];
-52        nums[i] = nums[j];
-53        nums[j] = temp;
-54    }
+       int n = nums.length;
+       // Find the (n-k)th smallest element because the kth largest is also the (n-k)th smallest when sorted in ascending order
+       return quickSelect(nums, 0, n - 1, n - k);
+   }
+
+   // Helper function to perform quick select
+    private int quickSelect(int[] nums, int left, int right, int kSmallest) {
+        // When the left and right pointers meet, we've found the kSmallest element
+        if (left == right) {
+            return nums[left];
+        }
+
+        // Initialize two pointers for the partitioning step
+        int i = left - 1;
+        int j = right + 1;
+        // Choose pivot as the middle element
+        int pivot = nums[(left + right) >>> 1];
+
+        while (i < j) {
+            // Move i right past any elements less than the pivot
+            do {
+                i++;
+            } while (nums[i] < pivot);
+
+            // Move j left past any elements greater than the pivot
+            do {
+                j--;
+            } while (nums[j] > pivot);
+
+            // Swap elements at i and j if they are out of order with respect to the pivot
+            if (i < j) {
+                swap(nums, i, j);
+            }
+        }
+
+        // After partitioning, the pivot is now at index j
+        // If we found the kSmallest element, return it
+        if (j >= kSmallest) {
+            return quickSelect(nums, left, j, kSmallest);
+        }
+
+        // Otherwise, continue the search in the right partition
+        return quickSelect(nums, j + 1, right, kSmallest);
+    }
+
+    // Swap function to swap two elements in the array
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    //198. House Robber
+    public int rob(int[] nums) {
+        // f represents the max profit we can get from the previous house
+        int prevNoRob = 0;
+        // g represents the max profit we can get if we rob the current house
+        int prevRob = 0;
+
+        // Iterate over all the houses in the array
+        for (int currentHouseValue : nums) {
+            // Store max profit of robbing/not robbing the previous house
+            int tempPrevNoRob = Math.max(prevNoRob, prevRob);
+
+            // If we rob the current house, we cannot rob the previous one
+            // hence our current profit is previous house's no-rob profit + current house value
+            prevRob = prevNoRob + currentHouseValue;
+
+            // Update the previous no-rob profit to be the best of robbing or not robbing the last house
+            prevNoRob = tempPrevNoRob;
+        }
+
+        // Return the max profit we can get from the last house,
+        // regardless of whether we rob it or not
+        return Math.max(prevNoRob, prevRob);
+    }
 
     class Node {
         public int val;
