@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Find_K_Pairs_with_Smallest_Sums_373 {
+public class Kth_Largest_Element_in_an_Array_215 {
 
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         List<List<Integer>> allPairs = new ArrayList();
