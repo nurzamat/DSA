@@ -2999,6 +2999,24 @@ public int findKthLargest(int[] nums, int k) {
         return Math.max(prevNoRob, prevRob);
     }
 
+    // task 70
+    public int climbStairs(int n) {
+5        int first = 0, second = 1;
+6      
+7        // Loop through number of steps n
+8        for (int i = 0; i < n; i++) {
+9            // Calculate next number in the series
+10            int next = first + second;
+11          
+12            // Update the previous two numbers for next iteration
+13            first = second;
+14            second = next;
+15        }
+16      
+17        // The 'second' variable holds the total ways to reach the top
+18        return second;
+19    }
+
     class Node {
         public int val;
         public List<Node> neighbors;
