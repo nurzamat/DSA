@@ -3001,21 +3001,47 @@ public int findKthLargest(int[] nums, int k) {
 
     // task 70
     public int climbStairs(int n) {
-5        int first = 0, second = 1;
-6      
-7        // Loop through number of steps n
-8        for (int i = 0; i < n; i++) {
-9            // Calculate next number in the series
-10            int next = first + second;
-11          
-12            // Update the previous two numbers for next iteration
-13            first = second;
-14            second = next;
-15        }
-16      
-17        // The 'second' variable holds the total ways to reach the top
-18        return second;
-19    }
+      int first = 0, second = 1;
+
+      // Loop through number of steps n
+      for (int i = 0; i < n; i++) {
+          // Calculate next number in the series
+           int next = first + second;
+
+           // Update the previous two numbers for next iteration
+           first = second;
+           second = next;
+       }
+
+       // The 'second' variable holds the total ways to reach the top
+       return second;
+   }
+
+    Map<String, Boolean> map = new HashMap();
+
+    //139. Word Break
+    public boolean wordBreak(String s, List<String> wordDict) {
+
+        map = new HashMap();
+        for (String word: wordDict){
+            map.put(word, true);
+        }
+
+    }
+
+    private boolean findWord(char[] arr, int k){
+
+        String word = "";
+        for(int i=k; i<arr.length; i++){
+            word = word + arr[i];
+
+            if(map.containsKey(word)){
+                return findWord(arr, i+1);
+            }
+        }
+
+        return false;
+    }
 
     class Node {
         public int val;
