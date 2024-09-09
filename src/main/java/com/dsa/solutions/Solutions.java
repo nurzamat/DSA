@@ -2999,6 +2999,34 @@ public int findKthLargest(int[] nums, int k) {
         return Math.max(prevNoRob, prevRob);
     }
 
+
+    Map<String, Boolean> map = new HashMap();
+
+    //139. Word Break
+    public boolean wordBreak(String s, List<String> wordDict) {
+
+        map = new HashMap();
+        for (String word: wordDict){
+            map.put(word, true);
+        }
+
+
+
+    }
+
+    private boolean findWord(char[] arr, int k){
+
+        String word = "";
+        for(int i=k; i<arr.length; i++){
+            word = word + arr[i];
+
+            if(map.containsKey(word)){
+                return findWord(arr, i+1);
+            }
+        }
+
+        return false;
+    }
     class Node {
         public int val;
         public List<Node> neighbors;
