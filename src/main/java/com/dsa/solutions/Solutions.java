@@ -3027,19 +3027,24 @@ public int findKthLargest(int[] nums, int k) {
             map.put(word, true);
         }
 
-        return findWord(s.toCharArray(), 0);
+        Map<Integer, Boolean> cache = new HashMap();
+        return findWord(s.toCharArray(), 0, cache);
     }
 
-    private boolean findWord(char[] arr, int k){
+    private boolean findWord(char[] arr, int k, Map<Integer, Boolean> cache){
         if(k>=arr.length)
             return true;
+        if(cache.containsKey(k)){
+            return cache.get(k);
+        }
 
         String word = "";
         for(int i=k; i<arr.length; i++){
             word = word + arr[i];
 
             if(map.containsKey(word)){
-                boolean found = findWord(arr, i+1);
+                boolean found = findWord(arr, i+1, cache);
+                cache.put(i+1, found);
                 if(found)
                     return true;
             }
