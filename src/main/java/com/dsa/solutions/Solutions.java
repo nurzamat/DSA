@@ -3021,25 +3021,23 @@ public int findKthLargest(int[] nums, int k) {
     public boolean wordBreak(String s, List<String> wordDict) {
 
         HashSet<String> hashSet = new HashSet<>(wordDict);
-        Map<Integer, Boolean> cache = new HashMap();
+        int length = s.length();
+        Boolean[] cache = new Boolean[length+1];
 
-        return findWord(s.toCharArray(), 0, hashSet, cache);
+        return findWord(s, length,0, hashSet, cache);
     }
 
-    private boolean findWord(char[] arr, int k, HashSet<String> hashSet, Map<Integer, Boolean> cache){
-        if(k>=arr.length)
+    private boolean findWord(String s, int length, int k, HashSet<String> hashSet, Boolean[] cache){
+        if(k>=length)
             return true;
-        if(cache.containsKey(k)){
-            return cache.get(k);
+        if(cache[k] != null){
+            return cache[k];
         }
 
-        String word = "";
-        for(int i=k; i<arr.length; i++){
-            word = word + arr[i];
-
-            if(hashSet.contains(word)){
-                boolean found = findWord(arr, i+1, hashSet, cache);
-                cache.put(i+1, found);
+        for(int i=k; i<length; i++){
+            if(hashSet.contains(s.substring(k,i+1))){
+                boolean found = findWord(s, length, i+1, hashSet, cache);
+                cache[i+1]=found;
                 if(found)
                     return true;
             }
